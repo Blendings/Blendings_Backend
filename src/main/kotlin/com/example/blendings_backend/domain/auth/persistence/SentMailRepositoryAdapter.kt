@@ -1,6 +1,7 @@
 package com.example.blendings_backend.domain.auth.persistence
 
 import com.example.blendings_backend.domain.auth.service.dao.SentMailModel
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteSentMailByMailPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindSentMailByAuthenticationCodePort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindSentMailByMailPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveSentMailPort
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component
 class SentMailRepositoryAdapter(
     private val sentMailRepository: SentMailRepository,
     private val sentMailMapper: SentMailMapper
-) : SaveSentMailPort, FindSentMailByMailPort, FindSentMailByAuthenticationCodePort {
+) : SaveSentMailPort, FindSentMailByMailPort, FindSentMailByAuthenticationCodePort, DeleteSentMailByMailPort {
 
     override fun saveSentMail(sentMailModel: SentMailModel): SentMailModel {
         sentMailRepository.save(sentMailMapper.toEntity(sentMailModel))
@@ -27,4 +28,8 @@ class SentMailRepositoryAdapter(
         sentMailRepository.findByAuthenticationCode(authenticationCode)?.let {
             sentMailMapper.toModel(it)
         }
+
+    override fun deleteSentMailByMail(mail: String) {
+        sentMailRepository.deleteById(mail)
+    }
 }
