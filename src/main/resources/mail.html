@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>mail</title>
+    <style>
+        html {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            background-color: #333333;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background-color: #252525;
+            height: 200px;
+            width: 450px;
+
+            border: #000000 solid 3px;
+            border-radius: 10px;
+
+            padding: 10px;
+        }
+
+        .code-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 80%;
+            width: 100%;
+        }
+
+        .code {
+            color: #de4444;
+
+            font-size: 64px;
+            font-weight: bold;
+
+            margin-left: 20px;
+            letter-spacing: 20px;
+
+            margin-bottom: 80px;
+        }
+
+        .valid-time-message-div {
+            display: flex;
+
+            height: 20%;
+            width: 100%;
+        }
+
+        .valid-time-message {
+            color: #d2d2d2;
+
+            font-size: 16px;
+
+            margin: 0;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="code-div">
+        <pre class="code" th:text="${code}">F47G3S</pre>
+    </div>
+    <div class="valid-time-message-div">
+        <pre class="valid-time-message">해당 코드는 5분 후에 만료됩니다.</pre>
+    </div>
+</div>
+</body>
+</html>
