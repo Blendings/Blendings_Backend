@@ -4,7 +4,10 @@ import com.example.blendings_backend.domain.auth.service.dao.AuthorizedMailModel
 import com.example.blendings_backend.domain.auth.service.dao.SentMailModel
 import com.example.blendings_backend.domain.auth.service.dto.*
 import com.example.blendings_backend.domain.auth.service.exception.*
-import com.example.blendings_backend.domain.auth.service.port.`in`.AuthUseCase
+import com.example.blendings_backend.domain.auth.service.port.`in`.AuthenticateMailUseCase
+import com.example.blendings_backend.domain.auth.service.port.`in`.ResendMailUseCase
+import com.example.blendings_backend.domain.auth.service.port.`in`.SendMailUseCase
+import com.example.blendings_backend.domain.auth.service.port.`in`.SignUseCase
 import com.example.blendings_backend.domain.auth.service.port.out.SendAuthenticationMailPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.*
 import com.example.blendings_backend.domain.user.service.dao.CoupleMapModel
@@ -13,16 +16,14 @@ import com.example.blendings_backend.domain.user.service.port.out.persistence.Ex
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsUserByMailPort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveCoupleMapPort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveUserPort
+import com.example.blendings_backend.global.annotation.UseCase
 import com.example.blendings_backend.global.convertor.LocalDateConvertor
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.util.*
 import kotlin.random.Random
 
-@Transactional
-@Service
+@UseCase
 class AuthInteractor(
     private val passwordEncoder: PasswordEncoder,
     private val sendAuthenticationMailPort: SendAuthenticationMailPort,
@@ -36,7 +37,7 @@ class AuthInteractor(
     private val existsUserByMailPort: ExistsUserByMailPort,
     private val saveCoupleMapPort: SaveCoupleMapPort,
     private val existsCoupleMapByNicknamePort: ExistsCoupleMapByNicknamePort
-) : AuthUseCase {
+) : SendMailUseCase, ResendMailUseCase, AuthenticateMailUseCase, SignUseCase {
 
     override fun sendMail(dto: SexMailDto) {
         sendMailOne(dto.maleMail)
@@ -59,10 +60,6 @@ class AuthInteractor(
         verifySignDto(dto)
         createAndSaveCouple(dto.maleSignInfo, dto.femaleSignInfo, dto.metDay, dto.coupleNickname)
         nullifyAuthenticationOfMail(dto)
-    }
-
-    override fun login(dto: LoginInfoDto) {
-        TODO("Not yet implemented")
     }
 
     private fun sendMailOne(mail: String) {
