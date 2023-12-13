@@ -1,11 +1,7 @@
 package com.example.blendings_backend.domain.auth.presentation.dto
 
-import com.example.blendings_backend.domain.auth.presentation.dto.request.AuthenticateMailRequest
-import com.example.blendings_backend.domain.auth.presentation.dto.request.ResendMailRequest
-import com.example.blendings_backend.domain.auth.presentation.dto.request.SendMailRequest
-import com.example.blendings_backend.domain.auth.service.dto.MailCodeDto
-import com.example.blendings_backend.domain.auth.service.dto.MailDto
-import com.example.blendings_backend.domain.auth.service.dto.SexMailDto
+import com.example.blendings_backend.domain.auth.presentation.dto.request.*
+import com.example.blendings_backend.domain.auth.service.dto.*
 
 object AuthDtoConverter {
 
@@ -25,4 +21,13 @@ object AuthDtoConverter {
             authenticateMailRequest.mail,
             authenticateMailRequest.authenticationCode
         )
+
+    fun signRequestToSignDto(signRequest: SignRequest): SignDto =
+        signRequest.run {
+            SignDto(
+                maleSignInfo = SignInfoDto(maleName, maleBirthDay, maleMail, malePassword),
+                femaleSignInfo = SignInfoDto(femaleName, femaleBirthDay, femaleMail, femalePassword),
+                metDay, coupleNickname
+            )
+        }
 }

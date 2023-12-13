@@ -10,7 +10,7 @@ interface AuthUseCase {
 
     fun authenticateMail(dto: MailCodeDto)
 
-    fun sign(dto: SexSignInfoDto)
+    fun sign(dto: SignDto)
 
     fun login(dto: LoginInfoDto)
 }

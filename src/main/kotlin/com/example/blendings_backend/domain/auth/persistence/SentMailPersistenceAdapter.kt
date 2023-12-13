@@ -9,15 +9,15 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
-class SentMailRepositoryAdapter(
+class SentMailPersistenceAdapter(
     private val sentMailRepository: SentMailRepository,
     private val sentMailMapper: SentMailMapper
 ) : SaveSentMailPort, FindSentMailByMailPort, FindSentMailByAuthenticationCodePort, DeleteSentMailByMailPort {
 
-    override fun saveSentMail(sentMailModel: SentMailModel): SentMailModel {
-        sentMailRepository.save(sentMailMapper.toEntity(sentMailModel))
-        return sentMailModel
-    }
+    override fun saveSentMail(sentMailModel: SentMailModel): SentMailModel =
+        sentMailMapper.toModel(
+            sentMailRepository.save(sentMailMapper.toEntity(sentMailModel))
+        )
 
     override fun findSentMailByMail(mail: String): SentMailModel? =
         sentMailRepository.findByIdOrNull(mail)?.let {
