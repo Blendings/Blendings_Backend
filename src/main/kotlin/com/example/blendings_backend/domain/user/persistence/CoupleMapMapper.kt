@@ -1,7 +1,9 @@
 package com.example.blendings_backend.domain.user.persistence
 
 import com.example.blendings_backend.domain.user.service.dao.CoupleMapModel
+import com.example.blendings_backend.global.annotation.Mapper
 
+@Mapper
 object CoupleMapMapper {
 
     fun toModel(coupleMapJpaEntity: CoupleMapJpaEntity): CoupleMapModel =
