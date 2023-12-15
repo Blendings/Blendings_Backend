@@ -21,21 +21,21 @@ class AuthController(
 ) {
 
     @PostMapping("/sign/mail")
-    fun mailSend(@RequestBody request: SendMailRequest) {
+    fun mailSend(@RequestBody @Valid request: SendMailRequest) {
         sendMailUseCase.sendMail(
             AuthDtoConverter.sendMailRequestToSexMailDto(request)
         )
     }
 
     @PostMapping("/sign/mail/resend")
-    fun mailResend(@RequestBody request: ResendMailRequest) {
+    fun mailResend(@RequestBody @Valid request: ResendMailRequest) {
         resendMailUseCase.resendMail(
             AuthDtoConverter.resendMailRequestToMailDto(request)
         )
     }
 
     @PostMapping("/sign/mail/authenticate")
-    fun mailAuthenticate(@RequestBody request: AuthenticateMailRequest) {
+    fun mailAuthenticate(@RequestBody @Valid request: AuthenticateMailRequest) {
         authenticateMailUseCase.authenticateMail(
             AuthDtoConverter.authenticateMailRequestToMailCodeDto(request)
         )
