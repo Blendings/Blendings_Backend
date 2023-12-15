@@ -1,15 +1,11 @@
 package com.example.blendings_backend.domain.auth.service
 
-import com.example.blendings_backend.domain.auth.service.dao.AuthorizedMailModel
-import com.example.blendings_backend.domain.auth.service.dao.SentMailModel
-import com.example.blendings_backend.domain.auth.service.dto.*
+import com.example.blendings_backend.domain.auth.service.dto.SignDto
+import com.example.blendings_backend.domain.auth.service.dto.SignInfoDto
 import com.example.blendings_backend.domain.auth.service.exception.*
-import com.example.blendings_backend.domain.auth.service.port.`in`.AuthenticateMailUseCase
-import com.example.blendings_backend.domain.auth.service.port.`in`.ResendMailUseCase
-import com.example.blendings_backend.domain.auth.service.port.`in`.SendMailUseCase
 import com.example.blendings_backend.domain.auth.service.port.`in`.SignUseCase
-import com.example.blendings_backend.domain.auth.service.port.out.SendAuthenticationMailPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.*
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteAuthorizedMailByMailPort
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.ExistsAuthorizedMailByMailPort
 import com.example.blendings_backend.domain.user.service.dao.CoupleMapModel
 import com.example.blendings_backend.domain.user.service.dao.UserModel
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsCoupleMapByNicknamePort
@@ -21,56 +17,22 @@ import com.example.blendings_backend.global.convertor.LocalDateConvertor
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDate
 import java.util.*
-import kotlin.random.Random
 
 @UseCase
-class AuthInteractor(
+class SignInteractor(
     private val passwordEncoder: PasswordEncoder,
-    private val sendAuthenticationMailPort: SendAuthenticationMailPort,
-    private val saveSentMailPort: SaveSentMailPort,
-    private val findSentMailByMailPort: FindSentMailByMailPort,
-    private val deleteSentMailByMailPort: DeleteSentMailByMailPort,
-    private val saveAuthorizedMailPort: SaveAuthorizedMailPort,
     private val existsAuthorizedMailByMailPort: ExistsAuthorizedMailByMailPort,
     private val deleteAuthorizedMailPort: DeleteAuthorizedMailByMailPort,
     private val saveUserPort: SaveUserPort,
     private val existsUserByMailPort: ExistsUserByMailPort,
     private val saveCoupleMapPort: SaveCoupleMapPort,
     private val existsCoupleMapByNicknamePort: ExistsCoupleMapByNicknamePort
-) : SendMailUseCase, ResendMailUseCase, AuthenticateMailUseCase, SignUseCase {
-
-    override fun sendMail(dto: SexMailDto) {
-        sendMailOne(dto.maleMail)
-        sendMailOne(dto.femaleMail)
-    }
-
-    override fun resendMail(dto: MailDto) {
-        deletePreviouslySentMail(dto.mail)
-        sendMailOne(dto.mail)
-    }
-
-    override fun authenticateMail(dto: MailCodeDto) {
-        val sentMail = findSentMailByMailPort.findSentMailByMail(dto.mail) ?: throw AuthenticationMailUnsentException
-        if (sentMail.authenticationCode != dto.authenticationCode) throw MisMatchAuthenticationCodeException
-        deleteSentMailByMailPort.deleteSentMailByMail(dto.mail)
-        saveAuthorizedMailPort.saveAuthorizedMail(AuthorizedMailModel(dto.mail))
-    }
+) : SignUseCase {
 
     override fun sign(dto: SignDto) {
         verifySignDto(dto)
         createAndSaveCouple(dto.maleSignInfo, dto.femaleSignInfo, dto.metDay, dto.coupleNickname)
         nullifyAuthenticationOfMail(dto)
-    }
-
-    private fun sendMailOne(mail: String) {
-        findSentMailByMailPort.findSentMailByMail(mail)?.let { throw InAuthenticateMailException }
-        val authenticationCode = createCode()
-        sendAuthenticationMailPort.sendAuthenticationMail(mail, authenticationCode)
-        saveSentMailPort.saveSentMail(SentMailModel(mail, authenticationCode))
-    }
-
-    private fun deletePreviouslySentMail(mail: String) {
-        deleteSentMailByMailPort.deleteSentMailByMail(mail)
     }
 
     private fun verifySignDto(dto: SignDto) {
@@ -101,17 +63,6 @@ class AuthInteractor(
         verifyNotSameMails(maleMail, femaleMail)
         verifyAuthorizedMails(maleMail, femaleMail)
         verifyNotDuplicatedMails(maleMail, femaleMail)
-    }
-
-    private fun createCode(): String {
-        val random = Random(Date().time)
-        var code = ""
-        for (i: Int in 1..6) {
-            val char = random.nextInt(0, 35)
-            code += if (char < 10) char
-            else (char + 55).toChar()
-        }
-        return code
     }
 
     private fun verifyMetDayNotBeforeThanTwoBirthdays(metDay: String, firstBirthDay: String, secondBirthDay: String) {
