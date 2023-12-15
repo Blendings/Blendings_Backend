@@ -32,13 +32,18 @@ class SignInteractor(
     override fun sign(dto: SignDto) {
         verifySignDto(dto)
         createAndSaveCouple(dto.maleSignInfo, dto.femaleSignInfo, dto.metDay, dto.coupleNickname)
-        nullifyAuthenticationOfMail(dto)
+        nullifyAuthenticationOfMail(dto.maleSignInfo.mail, dto.femaleSignInfo.mail)
     }
 
     private fun verifySignDto(dto: SignDto) {
-        verifyDays(dto.metDay, dto.maleSignInfo.birthDay, dto.femaleSignInfo.birthDay)
-        verifyMails(dto.maleSignInfo.mail, dto.femaleSignInfo.mail)
-        verifyNotDuplicatedCoupleNickname(dto.coupleNickname)
+        dto.run {
+            verifyMetDayNotAfterThanCurrentDay(metDay)
+            verifyMetDayNotBeforeThanTwoBirthdays(metDay, maleSignInfo.birthDay, femaleSignInfo.birthDay)
+            verifyNotSameMails(maleSignInfo.mail, femaleSignInfo.mail)
+            verifyAuthorizedMails(maleSignInfo.mail, femaleSignInfo.mail)
+            verifyNotDuplicatedCoupleNickname(dto.coupleNickname)
+            verifyNotDuplicatedMails(maleSignInfo.mail, femaleSignInfo.mail)
+        }
     }
 
     private fun createAndSaveCouple(
@@ -49,26 +54,15 @@ class SignInteractor(
         createAndSaveCoupleMap(femaleUserModel, maleUserModel, metDay, coupleNickname)
     }
 
-    private fun nullifyAuthenticationOfMail(dto: SignDto) {
-        deleteAuthorizedMailPort.deleteAuthorizedMailBuMail(dto.maleSignInfo.mail)
-        deleteAuthorizedMailPort.deleteAuthorizedMailBuMail(dto.femaleSignInfo.mail)
-    }
-
-    private fun verifyDays(metDay: String, maleBirthDay: String, femaleBirthDay: String) {
-        verifyMetDayNotAfterThanCurrentDay(metDay)
-        verifyMetDayNotBeforeThanTwoBirthdays(metDay, maleBirthDay, femaleBirthDay)
-    }
-
-    private fun verifyMails(maleMail: String, femaleMail: String) {
-        verifyNotSameMails(maleMail, femaleMail)
-        verifyAuthorizedMails(maleMail, femaleMail)
-        verifyNotDuplicatedMails(maleMail, femaleMail)
+    private fun nullifyAuthenticationOfMail(maleMail: String, femaleMail: String) {
+        deleteAuthorizedMailPort.deleteAuthorizedMailBuMail(maleMail)
+        deleteAuthorizedMailPort.deleteAuthorizedMailBuMail(femaleMail)
     }
 
     private fun verifyMetDayNotBeforeThanTwoBirthdays(metDay: String, firstBirthDay: String, secondBirthDay: String) {
         val metDate = LocalDateConvertor.convertStringToLocalDate(metDay)
-        if (metDate.isBefore(LocalDateConvertor.convertStringToLocalDate(firstBirthDay))
-            || metDate.isBefore(LocalDateConvertor.convertStringToLocalDate(secondBirthDay))
+        if (metDate.isBefore(LocalDateConvertor.convertStringToLocalDate(firstBirthDay)) ||
+            metDate.isBefore(LocalDateConvertor.convertStringToLocalDate(secondBirthDay))
         ) throw MetDayBeforeThanBirthdayException
     }
 
@@ -78,19 +72,14 @@ class SignInteractor(
     }
 
     private fun verifyNotSameMails(maleMail: String, femaleMail: String) {
-        if (maleMail == femaleMail) throw CoupleMailsCannotSameException
+        if (maleMail == femaleMail)
+            throw CoupleMailsCannotSameException
     }
 
     private fun verifyAuthorizedMails(maleMail: String, femaleMail: String) {
-        if (!existsAuthorizedMailByMailPort.existsAuthorizedMailByMail(maleMail)
-            || !existsAuthorizedMailByMailPort.existsAuthorizedMailByMail(femaleMail)
+        if (!existsAuthorizedMailByMailPort.existsAuthorizedMailByMail(maleMail) ||
+            !existsAuthorizedMailByMailPort.existsAuthorizedMailByMail(femaleMail)
         ) throw UnauthorizedMailException
-    }
-
-    private fun verifyNotDuplicatedMails(maleMail: String, femaleMail: String) {
-        if (existsUserByMailPort.existsUserByMail(maleMail)
-            || existsUserByMailPort.existsUserByMail(femaleMail)
-        ) throw DuplicatedMailException
     }
 
     private fun verifyNotDuplicatedCoupleNickname(coupleNickname: String) {
@@ -98,21 +87,32 @@ class SignInteractor(
             throw DuplicatedCoupleNicknameException
     }
 
-    private fun createAndSaveUser(signInfo: SignInfoDto): UserModel = saveUserPort.saveUser(signInfo.run {
-        UserModel(
-            name,
-            LocalDateConvertor.convertStringToLocalDate(birthDay),
-            mail,
-            passwordEncoder.encode(password),
-            UUID.randomUUID()
-        )
-    })
+    private fun verifyNotDuplicatedMails(maleMail: String, femaleMail: String) {
+        if (existsUserByMailPort.existsUserByMail(maleMail) ||
+            existsUserByMailPort.existsUserByMail(femaleMail)
+        ) throw DuplicatedMailException
+    }
+
+    private fun createAndSaveUser(signInfo: SignInfoDto): UserModel =
+        saveUserPort.saveUser(signInfo.run {
+            UserModel(
+                name = name,
+                birthDay = LocalDateConvertor.convertStringToLocalDate(birthDay),
+                mail = mail,
+                password = passwordEncoder.encode(password),
+                id = UUID.randomUUID()
+            )
+        })
 
     private fun createAndSaveCoupleMap(
         maleUserModel: UserModel, femaleUserModel: UserModel, metDay: String, coupleNickname: String
-    ): CoupleMapModel = saveCoupleMapPort.saveCoupleMap(
-        CoupleMapModel(
-            maleUserModel, femaleUserModel, LocalDateConvertor.convertStringToLocalDate(metDay), coupleNickname
+    ): CoupleMapModel =
+        saveCoupleMapPort.saveCoupleMap(
+            CoupleMapModel(
+                maleUser = maleUserModel,
+                femaleUser = femaleUserModel,
+                metDate = LocalDateConvertor.convertStringToLocalDate(metDay),
+                nickname = coupleNickname
+            )
         )
-    )
 }
