@@ -1,7 +1,9 @@
 package com.example.blendings_backend.domain.user.persistence
 
 import com.example.blendings_backend.domain.user.service.dao.UserModel
+import com.example.blendings_backend.global.annotation.Mapper
 
+@Mapper
 object UserMapper {
 
     fun toModel(userJpaEntity: UserJpaEntity): UserModel =

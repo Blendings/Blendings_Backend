@@ -6,14 +6,13 @@ import com.example.blendings_backend.domain.auth.presentation.dto.request.Resend
 import com.example.blendings_backend.domain.auth.presentation.dto.request.SendMailRequest
 import com.example.blendings_backend.domain.auth.presentation.dto.request.SignRequest
 import com.example.blendings_backend.domain.auth.service.port.`in`.*
+import com.example.blendings_backend.global.annotation.WebAdapter
 import org.springframework.http.HttpStatus
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Validated
 @RequestMapping("/auth")
-@RestController
+@WebAdapter
 class AuthController(
     private val sendMailUseCase: SendMailUseCase,
     private val resendMailUseCase: ResendMailUseCase,

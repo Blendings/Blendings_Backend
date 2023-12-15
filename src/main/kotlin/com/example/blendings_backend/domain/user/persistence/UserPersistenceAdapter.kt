@@ -3,9 +3,9 @@ package com.example.blendings_backend.domain.user.persistence
 import com.example.blendings_backend.domain.user.service.dao.UserModel
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsUserByMailPort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveUserPort
-import org.springframework.stereotype.Component
+import com.example.blendings_backend.global.annotation.PersistenceAdapter
 
-@Component
+@PersistenceAdapter
 class UserPersistenceAdapter(
     private val userRepository: UserRepository
 ) : SaveUserPort, ExistsUserByMailPort {

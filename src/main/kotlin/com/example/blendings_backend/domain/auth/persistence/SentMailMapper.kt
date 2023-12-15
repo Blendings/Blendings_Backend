@@ -1,9 +1,9 @@
 package com.example.blendings_backend.domain.auth.persistence
 
 import com.example.blendings_backend.domain.auth.service.dao.SentMailModel
-import org.springframework.stereotype.Component
+import com.example.blendings_backend.global.annotation.Mapper
 
-@Component
+@Mapper
 class SentMailMapper {
 
     fun toModel(sentMailEntity: SentMailEntity): SentMailModel =

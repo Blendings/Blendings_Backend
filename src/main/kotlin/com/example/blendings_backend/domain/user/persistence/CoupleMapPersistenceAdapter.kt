@@ -3,9 +3,9 @@ package com.example.blendings_backend.domain.user.persistence
 import com.example.blendings_backend.domain.user.service.dao.CoupleMapModel
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsCoupleMapByNicknamePort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveCoupleMapPort
-import org.springframework.stereotype.Component
+import com.example.blendings_backend.global.annotation.PersistenceAdapter
 
-@Component
+@PersistenceAdapter
 class CoupleMapPersistenceAdapter(
     private val coupleMapRepository: CoupleMapRepository
 ) : SaveCoupleMapPort, ExistsCoupleMapByNicknamePort {
