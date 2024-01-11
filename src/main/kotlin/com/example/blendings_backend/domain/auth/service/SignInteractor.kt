@@ -102,7 +102,7 @@ class SignInteractor(
         saveUserPort.saveUser(signInfo.run {
             UserModel(
                 name = name,
-                birthDay = LocalDateConvertor.convertStringToLocalDate(birthDay),
+                birthDate = LocalDateConvertor.convertStringToLocalDate(birthDay),
                 mailAddress = mailAddress,
                 password = passwordEncoder.encode(password),
                 id = UUID.randomUUID()

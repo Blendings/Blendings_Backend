@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
 
-@Entity()
+@Entity
 open class UserJpaEntity(
     name: String,
     birthDate: LocalDate,
@@ -12,24 +12,24 @@ open class UserJpaEntity(
     password: String,
     id: UUID
 ) {
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", updatable = true, nullable = false)
     var name: String = name
 
-    @Column(name = "nickname", nullable = true)
+    @Column(name = "nickname", updatable = true, nullable = true)
     var nickname: String? = null
 
-    @Column(name = "birth_date", nullable = false)
+    @Column(name = "birth_date", updatable = false, nullable = false)
     val birthDate: LocalDate = birthDate
 
-    @Column(name = "mail_address", unique = true, nullable = false)
+    @Column(name = "mail_address", unique = true, updatable = true, nullable = false)
     var mailAddress: String = mail
         protected set
 
-    @Column(name = "password", nullable = false, length = 61)
+    @Column(name = "password", updatable = true, nullable = false, length = 61)
     var password: String = password
         protected set
 
     @Id
-    @Column(name = "id", columnDefinition = "BINARY(16)", nullable = false)
+    @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     val id: UUID = id
 }

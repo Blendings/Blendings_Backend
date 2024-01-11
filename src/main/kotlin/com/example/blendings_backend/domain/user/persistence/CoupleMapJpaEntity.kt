@@ -11,17 +11,17 @@ class CoupleMapJpaEntity(
     nickname: String
 ) {
     @OneToOne
-    @JoinColumn(name = "male_user_id", nullable = false)
+    @JoinColumn(name = "male_user_id", updatable = false, nullable = false)
     val maleUser: UserJpaEntity = maleUser
 
     @OneToOne
-    @JoinColumn(name = "female_user_id", nullable = false)
+    @JoinColumn(name = "female_user_id", updatable = false, nullable = false)
     val femaleUser: UserJpaEntity = femaleUser
 
-    @Column(name = "met_date", nullable = false)
+    @Column(name = "met_date", updatable = false, nullable = false)
     val metDate: LocalDate = metDate
 
     @Id
-    @Column(name = "nickname", nullable = false, unique = true)
+    @Column(name = "nickname", updatable = true, unique = true, nullable = false)
     val nickname: String = nickname
 }

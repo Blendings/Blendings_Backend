@@ -10,5 +10,5 @@ object UserMapper {
         userJpaEntity.run { UserModel(name, birthDate, mailAddress, password, id) }
 
     fun toEntity(userModel: UserModel): UserJpaEntity =
-        userModel.run { UserJpaEntity(name, birthDay, mailAddress, password, id) }
+        userModel.run { UserJpaEntity(name, birthDate, mailAddress, password, id) }
 }
