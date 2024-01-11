@@ -1,7 +1,7 @@
 package com.example.blendings_backend.domain.auth.persistence
 
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailByMailAddressPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailByMailAddressPort
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailPort
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
 import com.example.blendings_backend.domain.auth.service.vo.AuthenticatedMailAddressModel
 import com.example.blendings_backend.global.annotation.PersistenceAdapter
@@ -9,23 +9,25 @@ import com.example.blendings_backend.global.annotation.PersistenceAdapter
 @PersistenceAdapter
 class AuthenticatedMailAddressPersistenceAdapter(
     private val authenticatedMailAddressRepository: AuthenticatedMailAddressRepository
-) : SaveAuthenticatedMailPort, ExistsAuthenticatedMailByMailAddressPort, DeleteAuthenticatedMailByMailAddressPort {
+) : SaveAuthenticatedMailPort,
+    ExistsAuthenticatedMailPort,
+    DeleteAuthenticatedMailPort {
 
     override fun saveAuthenticatedMailAddress(
-        authenticatedMailAddressModel: AuthenticatedMailAddressModel
+        domain: AuthenticatedMailAddressModel
     ): AuthenticatedMailAddressModel =
         AuthenticatedMailAddressMapper.toModel(
             authenticatedMailAddressRepository.save(
-                AuthenticatedMailAddressMapper.toEntity(
-                    authenticatedMailAddressModel
-                )
+                AuthenticatedMailAddressMapper.toEntity(domain)
             )
         )
 
-    override fun existsAuthenticatedMailAddressByMailAddress(mailAddress: String): Boolean =
+    override fun existsAuthenticatedMailAddress(mailAddress: String): Boolean =
         authenticatedMailAddressRepository.existsById(mailAddress)
 
-    override fun deleteAuthenticatedMailByMailAddress(mailAddress: String) {
-        authenticatedMailAddressRepository.deleteById(mailAddress)
+    override fun deleteAuthenticatedMail(model: AuthenticatedMailAddressModel) {
+        authenticatedMailAddressRepository.delete(
+            AuthenticatedMailAddressMapper.toEntity(model)
+        )
     }
 }

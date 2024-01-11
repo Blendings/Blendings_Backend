@@ -8,7 +8,8 @@ import com.example.blendings_backend.global.annotation.PersistenceAdapter
 @PersistenceAdapter
 class UserPersistenceAdapter(
     private val userRepository: UserRepository
-) : SaveUserPort, ExistsUserByMailPort {
+) : SaveUserPort,
+    ExistsUserByMailPort {
 
     override fun saveUser(userModel: UserModel): UserModel =
         UserMapper.toModel(

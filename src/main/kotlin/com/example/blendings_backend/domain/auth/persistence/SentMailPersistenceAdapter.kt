@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component
 @PersistenceAdapter
 class SentMailPersistenceAdapter(
     private val sentMailRepository: SentMailRepository
-) : SaveSentMailPort, FindSentMailByMailAddressPort, FindSentMailByAuthenticationCodePort, DeleteSentMailByMailAddressPort {
+) : SaveSentMailPort,
+    FindSentMailByMailAddressPort,
+    FindSentMailByAuthenticationCodePort,
+    DeleteSentMailByMailAddressPort {
 
     override fun saveSentMail(sentMailModel: SentMailModel): SentMailModel =
         SentMailMapper.toModel(

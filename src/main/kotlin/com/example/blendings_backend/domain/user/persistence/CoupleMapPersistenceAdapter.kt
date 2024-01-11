@@ -8,7 +8,8 @@ import com.example.blendings_backend.global.annotation.PersistenceAdapter
 @PersistenceAdapter
 class CoupleMapPersistenceAdapter(
     private val coupleMapRepository: CoupleMapRepository
-) : SaveCoupleMapPort, ExistsCoupleMapByNicknamePort {
+) : SaveCoupleMapPort,
+    ExistsCoupleMapByNicknamePort {
 
     override fun saveCoupleMap(coupleMapModel: CoupleMapModel): CoupleMapModel =
         CoupleMapMapper.toModel(

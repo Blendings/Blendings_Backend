@@ -12,11 +12,12 @@ class MailUtilImpl(
 
     override fun sendMail(mailAddress: String, subject: String, content: String) {
         val mimeMessage = mailSender.createMimeMessage()
-        val mimeMessageHelper = MimeMessageHelper(mimeMessage, false, StandardCharsets.UTF_8.name())
 
-        mimeMessageHelper.setTo(mailAddress)
-        mimeMessageHelper.setSubject(subject)
-        mimeMessageHelper.setText(content, true)
+        MimeMessageHelper(mimeMessage, false, StandardCharsets.UTF_8.name()).run {
+            setTo(mailAddress)
+            setSubject(subject)
+            setText(content, true)
+        }
 
         mailSender.send(mimeMessage)
     }
