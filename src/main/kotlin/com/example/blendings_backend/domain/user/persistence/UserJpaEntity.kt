@@ -6,7 +6,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-open class UserJpaEntity(
+class UserJpaEntity(
     name: String,
     birthDate: LocalDate,
     mail: String,
