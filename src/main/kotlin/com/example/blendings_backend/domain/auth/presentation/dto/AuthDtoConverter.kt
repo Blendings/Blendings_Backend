@@ -5,29 +5,30 @@ import com.example.blendings_backend.domain.auth.service.dto.*
 
 object AuthDtoConverter {
 
-    fun sendMailRequestToSexMailDto(sendMailRequest: SendMailRequest): BinaryMailAddressDto =
-        BinaryMailAddressDto(
-            maleMailAddress = sendMailRequest.maleMailAddress,
-            femaleMailAddress = sendMailRequest.femaleMailAddress
+    fun sendMailRequestToSexMailDto(sendMailWebRequest: SendMailWebRequest): SendMailRequest =
+        SendMailRequest(
+            maleMailAddress = sendMailWebRequest.maleMailAddress,
+            femaleMailAddress = sendMailWebRequest.femaleMailAddress
         )
 
-    fun resendMailRequestToMailDto(resendMailRequest: ResendMailRequest): ResendMailDto =
-        ResendMailDto(
-            resendMailRequest.mailAddress
+    fun resendMailRequestToMailDto(resendMailWebRequest: ResendMailWebRequest): ResendMailRequest =
+        ResendMailRequest(
+            mailAddress = resendMailWebRequest.mailAddress
         )
 
-    fun authenticateMailRequestToMailCodeDto(authenticateMailRequest: AuthenticateMailRequest): AuthenticateMailAddressDto =
-        AuthenticateMailAddressDto(
-            authenticateMailRequest.mailAddress,
-            authenticateMailRequest.authenticationCode
+    fun authenticateMailRequestToMailCodeDto(authenticateMailWebRequest: AuthenticateMailWebRequest): AuthenticateMailRequest =
+        AuthenticateMailRequest(
+            mailAddress = authenticateMailWebRequest.mailAddress,
+            authenticationCode = authenticateMailWebRequest.authenticationCode
         )
 
-    fun signRequestToSignDto(signRequest: SignRequest): SignDto =
-        signRequest.run {
-            SignDto(
+    fun signRequestToSignDto(signWebRequest: SignWebRequest): SignRequest =
+        signWebRequest.run {
+            SignRequest(
                 maleSignInfo = SignInfoDto(maleName, maleBirthDay, maleMailAddress, malePassword),
                 femaleSignInfo = SignInfoDto(femaleName, femaleBirthDay, femaleMailAddress, femalePassword),
-                metDay, coupleNickname
+                metDay = metDay,
+                coupleNickname = coupleNickname
             )
         }
 }

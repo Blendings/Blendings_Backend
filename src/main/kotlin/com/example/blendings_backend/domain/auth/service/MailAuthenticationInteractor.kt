@@ -2,9 +2,9 @@ package com.example.blendings_backend.domain.auth.service
 
 import com.example.blendings_backend.domain.auth.service.vo.AuthenticatedMailAddressModel
 import com.example.blendings_backend.domain.auth.service.vo.SentMailModel
-import com.example.blendings_backend.domain.auth.service.dto.AuthenticateMailAddressDto
-import com.example.blendings_backend.domain.auth.service.dto.ResendMailDto
-import com.example.blendings_backend.domain.auth.service.dto.BinaryMailAddressDto
+import com.example.blendings_backend.domain.auth.service.dto.AuthenticateMailRequest
+import com.example.blendings_backend.domain.auth.service.dto.ResendMailRequest
+import com.example.blendings_backend.domain.auth.service.dto.SendMailRequest
 import com.example.blendings_backend.domain.auth.service.exception.AuthenticationMailUnsentException
 import com.example.blendings_backend.domain.auth.service.exception.InAuthenticateMailAddressException
 import com.example.blendings_backend.domain.auth.service.exception.MisMatchAuthenticationCodeException
@@ -29,17 +29,17 @@ class MailAuthenticationInteractor(
     private val saveAuthenticatedMailPort: SaveAuthenticatedMailPort
 ) : SendAuthenticationMailUseCase, ResendMailUseCase, AuthenticateMailAddressUseCase {
 
-    override fun sendAuthenticationMailsToCouple(dto: BinaryMailAddressDto) {
+    override fun sendAuthenticationMailsToCouple(dto: SendMailRequest) {
         sendMailOne(dto.maleMailAddress)
         sendMailOne(dto.femaleMailAddress)
     }
 
-    override fun resendMail(dto: ResendMailDto) {
+    override fun resendMail(dto: ResendMailRequest) {
         deletePreviouslySentMail(dto.mailAddress)
         sendMailOne(dto.mailAddress)
     }
 
-    override fun authenticateMailAddress(dto: AuthenticateMailAddressDto) {
+    override fun authenticateMailAddress(dto: AuthenticateMailRequest) {
         verifyMatchAuthenticationCodeWithSaved(dto.mailAddress, dto.authenticationCode)
         deleteSentMailByMailAddressPort.deleteSentMailByMailAddress(dto.mailAddress)
         saveAuthenticatedMailPort.saveAuthenticatedMailAddress(AuthenticatedMailAddressModel(dto.mailAddress))

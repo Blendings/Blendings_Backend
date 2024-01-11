@@ -1,6 +1,6 @@
 package com.example.blendings_backend.domain.auth.service
 
-import com.example.blendings_backend.domain.auth.service.dto.SignDto
+import com.example.blendings_backend.domain.auth.service.dto.SignRequest
 import com.example.blendings_backend.domain.auth.service.dto.SignInfoDto
 import com.example.blendings_backend.domain.auth.service.exception.*
 import com.example.blendings_backend.domain.auth.service.port.`in`.SignUseCase
@@ -17,7 +17,6 @@ import com.example.blendings_backend.global.annotation.Interactor
 import com.example.blendings_backend.global.convertor.LocalDateConvertor
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDate
-import java.util.*
 
 @Interactor
 class SignInteractor(
@@ -30,7 +29,7 @@ class SignInteractor(
     private val existsCoupleMapByNicknamePort: ExistsCoupleMapByNicknamePort
 ) : SignUseCase {
 
-    override fun sign(dto: SignDto) {
+    override fun sign(dto: SignRequest) {
         dto.run {
             verifySignDto(this)
             createAndSaveCouple(maleSignInfo, femaleSignInfo, metDay, coupleNickname)
@@ -38,7 +37,7 @@ class SignInteractor(
         }
     }
 
-    private fun verifySignDto(dto: SignDto) {
+    private fun verifySignDto(dto: SignRequest) {
         dto.run {
             verifyMetDayNotAfterThanCurrentDay(metDay)
             verifyMetDayNotBeforeThanTwoBirthdays(metDay, maleSignInfo.birthDay, femaleSignInfo.birthDay)

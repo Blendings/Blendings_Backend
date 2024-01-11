@@ -1,6 +1,6 @@
 package com.example.blendings_backend.domain.auth.service.dto
 
-data class SignDto(
+data class SignRequest(
     val maleSignInfo: SignInfoDto,
     val femaleSignInfo: SignInfoDto,
     val metDay: String,

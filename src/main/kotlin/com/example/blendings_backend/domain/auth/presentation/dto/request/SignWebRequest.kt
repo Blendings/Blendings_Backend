@@ -3,7 +3,7 @@ package com.example.blendings_backend.domain.auth.presentation.dto.request
 import com.example.blendings_backend.domain.auth.presentation.AuthValidationValue
 import javax.validation.constraints.Pattern
 
-data class SignRequest(
+data class SignWebRequest(
 
     @Pattern(regexp = AuthValidationValue.NAME_REGEXP, message = AuthValidationValue.NAME_MESSAGE)
     val maleName: String,
