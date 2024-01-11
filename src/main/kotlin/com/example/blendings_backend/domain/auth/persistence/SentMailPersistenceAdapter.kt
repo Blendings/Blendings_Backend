@@ -5,10 +5,11 @@ import com.example.blendings_backend.domain.auth.service.port.out.persistence.De
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindSentMailByAuthenticationCodePort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindSentMailByMailAddressPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveSentMailPort
+import com.example.blendings_backend.global.annotation.PersistenceAdapter
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
-@Component
+@PersistenceAdapter
 class SentMailPersistenceAdapter(
     private val sentMailRepository: SentMailRepository
 ) : SaveSentMailPort, FindSentMailByMailAddressPort, FindSentMailByAuthenticationCodePort, DeleteSentMailByMailAddressPort {

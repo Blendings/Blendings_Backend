@@ -1,12 +1,12 @@
 package com.example.blendings_backend.domain.auth.persistence
 
-import com.example.blendings_backend.domain.auth.service.vo.AuthenticatedMailAddressModel
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailByMailAddressPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailByMailAddressPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
-import org.springframework.stereotype.Component
+import com.example.blendings_backend.domain.auth.service.vo.AuthenticatedMailAddressModel
+import com.example.blendings_backend.global.annotation.PersistenceAdapter
 
-@Component
+@PersistenceAdapter
 class AuthenticatedMailAddressPersistenceAdapter(
     private val authenticatedMailAddressRepository: AuthenticatedMailAddressRepository
 ) : SaveAuthenticatedMailPort, ExistsAuthenticatedMailByMailAddressPort, DeleteAuthenticatedMailByMailAddressPort {
@@ -15,7 +15,11 @@ class AuthenticatedMailAddressPersistenceAdapter(
         authenticatedMailAddressModel: AuthenticatedMailAddressModel
     ): AuthenticatedMailAddressModel =
         AuthenticatedMailAddressMapper.toModel(
-            authenticatedMailAddressRepository.save(AuthenticatedMailAddressMapper.toEntity(authenticatedMailAddressModel))
+            authenticatedMailAddressRepository.save(
+                AuthenticatedMailAddressMapper.toEntity(
+                    authenticatedMailAddressModel
+                )
+            )
         )
 
     override fun existsAuthenticatedMailAddressByMailAddress(mailAddress: String): Boolean =

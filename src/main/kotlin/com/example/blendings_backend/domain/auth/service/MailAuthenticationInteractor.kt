@@ -16,11 +16,11 @@ import com.example.blendings_backend.domain.auth.service.port.out.persistence.De
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindSentMailByMailAddressPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveSentMailPort
-import com.example.blendings_backend.global.annotation.UseCase
+import com.example.blendings_backend.global.annotation.Interactor
 import java.util.*
 import kotlin.random.Random
 
-@UseCase
+@Interactor
 class MailAuthenticationInteractor(
     private val sendAuthenticationMailPort: SendAuthenticationMailPort,
     private val saveSentMailPort: SaveSentMailPort,

@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 @Service
-annotation class UseCase()
+annotation class Interactor()
 /**
  * UseCase를 상속받는 Interactor(Service)에 사용
  */

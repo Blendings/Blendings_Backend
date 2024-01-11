@@ -12,13 +12,13 @@ import com.example.blendings_backend.domain.user.service.port.out.persistence.Ex
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsUserByMailPort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveCoupleMapPort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveUserPort
-import com.example.blendings_backend.global.annotation.UseCase
+import com.example.blendings_backend.global.annotation.Interactor
 import com.example.blendings_backend.global.convertor.LocalDateConvertor
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDate
 import java.util.*
 
-@UseCase
+@Interactor
 class SignInteractor(
     private val passwordEncoder: PasswordEncoder,
     private val existsAuthenticatedMailByMailAddressPort: ExistsAuthenticatedMailByMailAddressPort,
