@@ -21,8 +21,8 @@ open class UserJpaEntity(
     @Column(name = "birth_date", nullable = false)
     val birthDate: LocalDate = birthDate
 
-    @Column(name = "mail", unique = true, nullable = false)
-    var mail: String = mail
+    @Column(name = "mail_address", unique = true, nullable = false)
+    var mailAddress: String = mail
         protected set
 
     @Column(name = "password", nullable = false, length = 61)

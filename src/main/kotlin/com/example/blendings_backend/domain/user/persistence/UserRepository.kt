@@ -7,5 +7,5 @@ import java.util.*
 @Repository
 interface UserRepository : JpaRepository<UserJpaEntity, UUID> {
 
-    fun existsByMail(mail: String): Boolean
+    fun existsByMailAddress(mail: String): Boolean
 }

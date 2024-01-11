@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.index.Indexed
 data class SentMailEntity(
 
     @Id
-    val mail: String,
+    val mailAddress: String,
 
     @Indexed
     val authenticationCode: String

@@ -10,11 +10,11 @@ class MailUtilImpl(
     private val mailSender: JavaMailSender
 ) : MailUtil {
 
-    override fun sendMail(mail: String, subject: String, content: String) {
+    override fun sendMail(mailAddress: String, subject: String, content: String) {
         val mimeMessage = mailSender.createMimeMessage()
         val mimeMessageHelper = MimeMessageHelper(mimeMessage, false, StandardCharsets.UTF_8.name())
 
-        mimeMessageHelper.setTo(mail)
+        mimeMessageHelper.setTo(mailAddress)
         mimeMessageHelper.setSubject(subject)
         mimeMessageHelper.setText(content, true)
 

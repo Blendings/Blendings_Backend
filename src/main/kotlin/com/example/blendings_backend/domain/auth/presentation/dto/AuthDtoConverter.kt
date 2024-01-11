@@ -5,28 +5,28 @@ import com.example.blendings_backend.domain.auth.service.dto.*
 
 object AuthDtoConverter {
 
-    fun sendMailRequestToSexMailDto(sendMailRequest: SendMailRequest): SexMailDto =
-        SexMailDto(
-            maleMail = sendMailRequest.maleMail,
-            femaleMail = sendMailRequest.femaleMail
+    fun sendMailRequestToSexMailDto(sendMailRequest: SendMailRequest): BinaryMailAddressDto =
+        BinaryMailAddressDto(
+            maleMailAddress = sendMailRequest.maleMailAddress,
+            femaleMailAddress = sendMailRequest.femaleMailAddress
         )
 
-    fun resendMailRequestToMailDto(resendMailRequest: ResendMailRequest): MailDto =
-        MailDto(
-            resendMailRequest.mail
+    fun resendMailRequestToMailDto(resendMailRequest: ResendMailRequest): ResendMailDto =
+        ResendMailDto(
+            resendMailRequest.mailAddress
         )
 
-    fun authenticateMailRequestToMailCodeDto(authenticateMailRequest: AuthenticateMailRequest): MailCodeDto =
-        MailCodeDto(
-            authenticateMailRequest.mail,
+    fun authenticateMailRequestToMailCodeDto(authenticateMailRequest: AuthenticateMailRequest): AuthenticateMailAddressDto =
+        AuthenticateMailAddressDto(
+            authenticateMailRequest.mailAddress,
             authenticateMailRequest.authenticationCode
         )
 
     fun signRequestToSignDto(signRequest: SignRequest): SignDto =
         signRequest.run {
             SignDto(
-                maleSignInfo = SignInfoDto(maleName, maleBirthDay, maleMail, malePassword),
-                femaleSignInfo = SignInfoDto(femaleName, femaleBirthDay, femaleMail, femalePassword),
+                maleSignInfo = SignInfoDto(maleName, maleBirthDay, maleMailAddress, malePassword),
+                femaleSignInfo = SignInfoDto(femaleName, femaleBirthDay, femaleMailAddress, femalePassword),
                 metDay, coupleNickname
             )
         }

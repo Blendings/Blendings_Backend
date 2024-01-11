@@ -4,10 +4,10 @@ import com.example.blendings_backend.domain.auth.service.dto.SignDto
 import com.example.blendings_backend.domain.auth.service.dto.SignInfoDto
 import com.example.blendings_backend.domain.auth.service.exception.*
 import com.example.blendings_backend.domain.auth.service.port.`in`.SignUseCase
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteAuthorizedMailByMailPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.ExistsAuthorizedMailByMailPort
-import com.example.blendings_backend.domain.user.service.dao.CoupleMapModel
-import com.example.blendings_backend.domain.user.service.dao.UserModel
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailByMailAddressPort
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailByMailAddressPort
+import com.example.blendings_backend.domain.user.service.vo.CoupleMapModel
+import com.example.blendings_backend.domain.user.service.vo.UserModel
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsCoupleMapByNicknamePort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsUserByMailPort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveCoupleMapPort
@@ -21,8 +21,8 @@ import java.util.*
 @UseCase
 class SignInteractor(
     private val passwordEncoder: PasswordEncoder,
-    private val existsAuthorizedMailByMailPort: ExistsAuthorizedMailByMailPort,
-    private val deleteAuthorizedMailPort: DeleteAuthorizedMailByMailPort,
+    private val existsAuthenticatedMailByMailAddressPort: ExistsAuthenticatedMailByMailAddressPort,
+    private val deleteAuthorizedMailPort: DeleteAuthenticatedMailByMailAddressPort,
     private val saveUserPort: SaveUserPort,
     private val existsUserByMailPort: ExistsUserByMailPort,
     private val saveCoupleMapPort: SaveCoupleMapPort,
@@ -32,17 +32,17 @@ class SignInteractor(
     override fun sign(dto: SignDto) {
         verifySignDto(dto)
         createAndSaveCouple(dto.maleSignInfo, dto.femaleSignInfo, dto.metDay, dto.coupleNickname)
-        nullifyAuthenticationOfMail(dto.maleSignInfo.mail, dto.femaleSignInfo.mail)
+        nullifyAuthenticationOfMailAddress(dto.maleSignInfo.mailAddress, dto.femaleSignInfo.mailAddress)
     }
 
     private fun verifySignDto(dto: SignDto) {
         dto.run {
             verifyMetDayNotAfterThanCurrentDay(metDay)
             verifyMetDayNotBeforeThanTwoBirthdays(metDay, maleSignInfo.birthDay, femaleSignInfo.birthDay)
-            verifyNotSameMails(maleSignInfo.mail, femaleSignInfo.mail)
-            verifyAuthorizedMails(maleSignInfo.mail, femaleSignInfo.mail)
+            verifyNotSameMailAddresses(maleSignInfo.mailAddress, femaleSignInfo.mailAddress)
+            verifyMailAddressesAuthorized(maleSignInfo.mailAddress, femaleSignInfo.mailAddress)
             verifyNotDuplicatedCoupleNickname(dto.coupleNickname)
-            verifyNotDuplicatedMails(maleSignInfo.mail, femaleSignInfo.mail)
+            verifyNotDuplicatedMailAddresses(maleSignInfo.mailAddress, femaleSignInfo.mailAddress)
         }
     }
 
@@ -54,9 +54,9 @@ class SignInteractor(
         createAndSaveCoupleMap(femaleUserModel, maleUserModel, metDay, coupleNickname)
     }
 
-    private fun nullifyAuthenticationOfMail(maleMail: String, femaleMail: String) {
-        deleteAuthorizedMailPort.deleteAuthorizedMailBuMail(maleMail)
-        deleteAuthorizedMailPort.deleteAuthorizedMailBuMail(femaleMail)
+    private fun nullifyAuthenticationOfMailAddress(maleMailAddress: String, femaleMailAddress: String) {
+        deleteAuthorizedMailPort.deleteAuthenticatedMailByMailAddress(maleMailAddress)
+        deleteAuthorizedMailPort.deleteAuthenticatedMailByMailAddress(femaleMailAddress)
     }
 
     private fun verifyMetDayNotBeforeThanTwoBirthdays(metDay: String, firstBirthDay: String, secondBirthDay: String) {
@@ -71,15 +71,15 @@ class SignInteractor(
             throw MetDayAfterThanCurrentDayException
     }
 
-    private fun verifyNotSameMails(maleMail: String, femaleMail: String) {
-        if (maleMail == femaleMail)
-            throw CoupleMailsCannotSameException
+    private fun verifyNotSameMailAddresses(maleMailAddress: String, femaleMailAddress: String) {
+        if (maleMailAddress == femaleMailAddress)
+            throw CoupleMailAddressesCannotSameException
     }
 
-    private fun verifyAuthorizedMails(maleMail: String, femaleMail: String) {
-        if (!existsAuthorizedMailByMailPort.existsAuthorizedMailByMail(maleMail) ||
-            !existsAuthorizedMailByMailPort.existsAuthorizedMailByMail(femaleMail)
-        ) throw UnauthorizedMailException
+    private fun verifyMailAddressesAuthorized(maleMail: String, femaleMail: String) {
+        if (!existsAuthenticatedMailByMailAddressPort.existsAuthenticatedMailAddressByMailAddress(maleMail) ||
+            !existsAuthenticatedMailByMailAddressPort.existsAuthenticatedMailAddressByMailAddress(femaleMail)
+        ) throw UnauthenticatedMailAddressException
     }
 
     private fun verifyNotDuplicatedCoupleNickname(coupleNickname: String) {
@@ -87,10 +87,10 @@ class SignInteractor(
             throw DuplicatedCoupleNicknameException
     }
 
-    private fun verifyNotDuplicatedMails(maleMail: String, femaleMail: String) {
-        if (existsUserByMailPort.existsUserByMail(maleMail) ||
-            existsUserByMailPort.existsUserByMail(femaleMail)
-        ) throw DuplicatedMailException
+    private fun verifyNotDuplicatedMailAddresses(maleMailAddress: String, femaleMailAddress: String) {
+        if (existsUserByMailPort.existsUserByMailAddress(maleMailAddress) ||
+            existsUserByMailPort.existsUserByMailAddress(femaleMailAddress)
+        ) throw DuplicatedMailAddressException
     }
 
     private fun createAndSaveUser(signInfo: SignInfoDto): UserModel =
@@ -98,7 +98,7 @@ class SignInteractor(
             UserModel(
                 name = name,
                 birthDay = LocalDateConvertor.convertStringToLocalDate(birthDay),
-                mail = mail,
+                mailAddress = mailAddress,
                 password = passwordEncoder.encode(password),
                 id = UUID.randomUUID()
             )

@@ -5,6 +5,6 @@ import javax.validation.constraints.Pattern
 
 data class ResendMailRequest(
 
-    @Pattern(regexp = AuthValidationValue.MAIL_REGEXP, message = AuthValidationValue.MAIL_MESSAGE)
-    val mail: String
+    @Pattern(regexp = AuthValidationValue.MAIL_ADDRESS_REGEXP, message = AuthValidationValue.MAIL_ADDRESS_MESSAGE)
+    val mailAddress: String
 )

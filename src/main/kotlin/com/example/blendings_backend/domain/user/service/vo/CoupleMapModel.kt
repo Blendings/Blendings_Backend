@@ -1,4 +1,4 @@
-package com.example.blendings_backend.domain.user.service.dao
+package com.example.blendings_backend.domain.user.service.vo
 
 import java.time.LocalDate
 

@@ -10,6 +10,6 @@ data class SignDto(
 data class SignInfoDto(
     val name: String,
     val birthDay: String,
-    val mail: String,
+    val mailAddress: String,
     val password: String
 )

@@ -5,9 +5,9 @@ import javax.validation.constraints.Pattern
 
 data class SendMailRequest(
 
-    @Pattern(regexp = AuthValidationValue.MAIL_REGEXP, message = AuthValidationValue.MAIL_MESSAGE)
-    val maleMail: String,
+    @Pattern(regexp = AuthValidationValue.MAIL_ADDRESS_REGEXP, message = AuthValidationValue.MAIL_ADDRESS_MESSAGE)
+    val maleMailAddress: String,
 
-    @Pattern(regexp = AuthValidationValue.MAIL_REGEXP, message = AuthValidationValue.MAIL_MESSAGE)
-    val femaleMail: String
+    @Pattern(regexp = AuthValidationValue.MAIL_ADDRESS_REGEXP, message = AuthValidationValue.MAIL_ADDRESS_MESSAGE)
+    val femaleMailAddress: String
 )

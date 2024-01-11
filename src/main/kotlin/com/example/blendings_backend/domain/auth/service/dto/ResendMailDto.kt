@@ -1,5 +1,5 @@
 package com.example.blendings_backend.domain.auth.service.dto
 
-data class MailDto(
-    val mail: String
+data class ResendMailDto(
+    val mailAddress: String
 )

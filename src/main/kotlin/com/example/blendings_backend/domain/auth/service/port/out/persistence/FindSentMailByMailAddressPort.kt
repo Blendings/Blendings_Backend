@@ -2,7 +2,7 @@ package com.example.blendings_backend.domain.auth.service.port.out.persistence
 
 import com.example.blendings_backend.domain.auth.service.vo.SentMailModel
 
-interface SaveSentMailPort {
+interface FindSentMailByMailAddressPort {
 
-    fun saveSentMail(sentMailModel: SentMailModel): SentMailModel
+    fun findSentMailByMailAddress(mailAddress: String): SentMailModel?
 }

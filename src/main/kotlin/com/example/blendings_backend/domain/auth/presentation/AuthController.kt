@@ -14,15 +14,15 @@ import javax.validation.Valid
 @RequestMapping("/auth")
 @WebAdapter
 class AuthController(
-    private val sendMailUseCase: SendMailUseCase,
+    private val sendAuthenticationMailUseCase: SendAuthenticationMailUseCase,
     private val resendMailUseCase: ResendMailUseCase,
-    private val authenticateMailUseCase: AuthenticateMailUseCase,
+    private val authenticateMailAddressUseCase: AuthenticateMailAddressUseCase,
     private val signUseCase: SignUseCase
 ) {
 
     @PostMapping("/sign/mail")
     fun mailSend(@RequestBody @Valid request: SendMailRequest) {
-        sendMailUseCase.sendMail(
+        sendAuthenticationMailUseCase.sendAuthenticationMailsToCouple(
             AuthDtoConverter.sendMailRequestToSexMailDto(request)
         )
     }
@@ -36,7 +36,7 @@ class AuthController(
 
     @PostMapping("/sign/mail/authenticate")
     fun mailAuthenticate(@RequestBody @Valid request: AuthenticateMailRequest) {
-        authenticateMailUseCase.authenticateMail(
+        authenticateMailAddressUseCase.authenticateMailAddress(
             AuthDtoConverter.authenticateMailRequestToMailCodeDto(request)
         )
     }

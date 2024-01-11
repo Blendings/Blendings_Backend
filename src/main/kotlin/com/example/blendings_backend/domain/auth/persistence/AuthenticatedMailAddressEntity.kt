@@ -4,8 +4,8 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 
 @RedisHash(timeToLive = 600)
-data class AuthorizedMailEntity(
+data class AuthenticatedMailAddressEntity(
 
     @Id
-    val mail: String
+    val mailAddress: String
 )

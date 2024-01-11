@@ -1,20 +1,20 @@
 package com.example.blendings_backend.domain.auth.service
 
-import com.example.blendings_backend.domain.auth.service.dao.AuthorizedMailModel
-import com.example.blendings_backend.domain.auth.service.dao.SentMailModel
-import com.example.blendings_backend.domain.auth.service.dto.MailCodeDto
-import com.example.blendings_backend.domain.auth.service.dto.MailDto
-import com.example.blendings_backend.domain.auth.service.dto.SexMailDto
+import com.example.blendings_backend.domain.auth.service.vo.AuthenticatedMailAddressModel
+import com.example.blendings_backend.domain.auth.service.vo.SentMailModel
+import com.example.blendings_backend.domain.auth.service.dto.AuthenticateMailAddressDto
+import com.example.blendings_backend.domain.auth.service.dto.ResendMailDto
+import com.example.blendings_backend.domain.auth.service.dto.BinaryMailAddressDto
 import com.example.blendings_backend.domain.auth.service.exception.AuthenticationMailUnsentException
-import com.example.blendings_backend.domain.auth.service.exception.InAuthenticateMailException
+import com.example.blendings_backend.domain.auth.service.exception.InAuthenticateMailAddressException
 import com.example.blendings_backend.domain.auth.service.exception.MisMatchAuthenticationCodeException
-import com.example.blendings_backend.domain.auth.service.port.`in`.AuthenticateMailUseCase
+import com.example.blendings_backend.domain.auth.service.port.`in`.AuthenticateMailAddressUseCase
 import com.example.blendings_backend.domain.auth.service.port.`in`.ResendMailUseCase
-import com.example.blendings_backend.domain.auth.service.port.`in`.SendMailUseCase
+import com.example.blendings_backend.domain.auth.service.port.`in`.SendAuthenticationMailUseCase
 import com.example.blendings_backend.domain.auth.service.port.out.SendAuthenticationMailPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteSentMailByMailPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindSentMailByMailPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveAuthorizedMailPort
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteSentMailByMailAddressPort
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindSentMailByMailAddressPort
+import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
 import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveSentMailPort
 import com.example.blendings_backend.global.annotation.UseCase
 import java.util.*
@@ -24,40 +24,40 @@ import kotlin.random.Random
 class MailAuthenticationInteractor(
     private val sendAuthenticationMailPort: SendAuthenticationMailPort,
     private val saveSentMailPort: SaveSentMailPort,
-    private val findSentMailByMailPort: FindSentMailByMailPort,
-    private val deleteSentMailByMailPort: DeleteSentMailByMailPort,
-    private val saveAuthorizedMailPort: SaveAuthorizedMailPort
-) : SendMailUseCase, ResendMailUseCase, AuthenticateMailUseCase {
+    private val findSentMailByMailAddressPort: FindSentMailByMailAddressPort,
+    private val deleteSentMailByMailAddressPort: DeleteSentMailByMailAddressPort,
+    private val saveAuthenticatedMailPort: SaveAuthenticatedMailPort
+) : SendAuthenticationMailUseCase, ResendMailUseCase, AuthenticateMailAddressUseCase {
 
-    override fun sendMail(dto: SexMailDto) {
-        sendMailOne(dto.maleMail)
-        sendMailOne(dto.femaleMail)
+    override fun sendAuthenticationMailsToCouple(dto: BinaryMailAddressDto) {
+        sendMailOne(dto.maleMailAddress)
+        sendMailOne(dto.femaleMailAddress)
     }
 
-    override fun resendMail(dto: MailDto) {
-        deletePreviouslySentMail(dto.mail)
-        sendMailOne(dto.mail)
+    override fun resendMail(dto: ResendMailDto) {
+        deletePreviouslySentMail(dto.mailAddress)
+        sendMailOne(dto.mailAddress)
     }
 
-    override fun authenticateMail(dto: MailCodeDto) {
-        verifyMatchAuthenticationCodeWithSaved(dto.mail, dto.authenticationCode)
-        deleteSentMailByMailPort.deleteSentMailByMail(dto.mail)
-        saveAuthorizedMailPort.saveAuthorizedMail(AuthorizedMailModel(dto.mail))
+    override fun authenticateMailAddress(dto: AuthenticateMailAddressDto) {
+        verifyMatchAuthenticationCodeWithSaved(dto.mailAddress, dto.authenticationCode)
+        deleteSentMailByMailAddressPort.deleteSentMailByMailAddress(dto.mailAddress)
+        saveAuthenticatedMailPort.saveAuthenticatedMailAddress(AuthenticatedMailAddressModel(dto.mailAddress))
     }
 
-    private fun sendMailOne(mail: String) {
-        findSentMailByMailPort.findSentMailByMail(mail)?.let { throw InAuthenticateMailException }
+    private fun sendMailOne(mailAddress: String) {
+        findSentMailByMailAddressPort.findSentMailByMailAddress(mailAddress)?.let { throw InAuthenticateMailAddressException }
         val authenticationCode = createCode()
-        sendAuthenticationMailPort.sendAuthenticationMail(mail, authenticationCode)
-        saveSentMailPort.saveSentMail(SentMailModel(mail, authenticationCode))
+        sendAuthenticationMailPort.sendAuthenticationMail(mailAddress, authenticationCode)
+        saveSentMailPort.saveSentMail(SentMailModel(mailAddress, authenticationCode))
     }
 
     private fun deletePreviouslySentMail(mail: String) {
-        deleteSentMailByMailPort.deleteSentMailByMail(mail)
+        deleteSentMailByMailAddressPort.deleteSentMailByMailAddress(mail)
     }
 
     private fun verifyMatchAuthenticationCodeWithSaved(mail: String, authenticationCode: String) {
-        val sentMail = findSentMailByMailPort.findSentMailByMail(mail) ?: throw AuthenticationMailUnsentException
+        val sentMail = findSentMailByMailAddressPort.findSentMailByMailAddress(mail) ?: throw AuthenticationMailUnsentException
         if (sentMail.authenticationCode != authenticationCode) throw MisMatchAuthenticationCodeException
     }
 
