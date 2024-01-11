@@ -104,8 +104,7 @@ class SignInteractor(
                 name = name,
                 birthDate = LocalDateConvertor.convertStringToLocalDate(birthDay),
                 mailAddress = mailAddress,
-                password = passwordEncoder.encode(password),
-                id = UUID.randomUUID()
+                password = passwordEncoder.encode(password)
             )
         })
 

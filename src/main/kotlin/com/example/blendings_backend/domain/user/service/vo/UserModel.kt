@@ -8,5 +8,5 @@ data class UserModel(
     val birthDate: LocalDate,
     val mailAddress: String,
     val password: String,
-    val id: UUID
+    val id: UUID? = null
 )
