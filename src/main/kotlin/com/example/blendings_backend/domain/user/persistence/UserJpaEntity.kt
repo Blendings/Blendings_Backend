@@ -1,5 +1,6 @@
 package com.example.blendings_backend.domain.user.persistence
 
+import com.example.blendings_backend.domain.base.entty.BaseUUIDEntity
 import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
@@ -10,8 +11,8 @@ open class UserJpaEntity(
     birthDate: LocalDate,
     mail: String,
     password: String,
-    id: UUID
-) {
+    id: UUID? = null
+) : BaseUUIDEntity(id) {
     @Column(name = "name", updatable = true, nullable = false)
     var name: String = name
 
@@ -28,8 +29,4 @@ open class UserJpaEntity(
     @Column(name = "password", updatable = true, nullable = false, length = 61)
     var password: String = password
         protected set
-
-    @Id
-    @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
-    val id: UUID = id
 }
