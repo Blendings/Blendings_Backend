@@ -6,6 +6,10 @@ enum class ErrorCode(
     val status: HttpStatus,
     val message: String
 ) {
+
+    // Auth
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "유효한 자격 증명이 필요합니다."),
+
     // Mail
     IN_AUTHENTICATE_MAIL_ADDRESS(HttpStatus.CONFLICT, "회원가입 진행 중에 있는 메일입니다. 해킹당한 메일일 수 있습니다."),
     AUTHENTICATION_MAIL_UNSENT(HttpStatus.NOT_FOUND, "해당 메일은 인증 코드를 발송하지 않았습니다."),

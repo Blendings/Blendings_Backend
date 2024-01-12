@@ -1,6 +1,7 @@
 package com.example.blendings_backend.domain.auth.presentation.dto.request
 
 import com.example.blendings_backend.domain.auth.presentation.AuthValidationValue
+import com.example.blendings_backend.domain.auth.service.dto.AuthenticateMailRequest
 import javax.validation.constraints.Pattern
 
 data class AuthenticateMailWebRequest(
@@ -13,4 +14,6 @@ data class AuthenticateMailWebRequest(
         message = AuthValidationValue.AUTHENTICATION_CODE_MESSAGE
     )
     val authenticationCode: String
-)
+) {
+    fun toDomainRequest() = AuthenticateMailRequest(mailAddress, authenticationCode)
+}

@@ -1,6 +1,8 @@
 package com.example.blendings_backend.domain.auth.presentation.dto.request
 
 import com.example.blendings_backend.domain.auth.presentation.AuthValidationValue
+import com.example.blendings_backend.domain.auth.service.dto.SignInfoDto
+import com.example.blendings_backend.domain.auth.service.dto.SignRequest
 import javax.validation.constraints.Pattern
 
 data class SignWebRequest(
@@ -34,4 +36,11 @@ data class SignWebRequest(
 
     @Pattern(regexp = AuthValidationValue.COUPLE_NICKNAME_REGEXP, message = AuthValidationValue.COUPLE_NICKNAME_MESSAGE)
     val coupleNickname: String
-)
+) {
+    fun toDomainRequest(): SignRequest =
+        SignRequest(
+            maleSignInfo = SignInfoDto(maleName, maleBirthDay, maleMailAddress, malePassword),
+            femaleSignInfo = SignInfoDto(femaleName, femaleBirthDay, femaleMailAddress, femalePassword),
+            metDay, coupleNickname
+        )
+}
