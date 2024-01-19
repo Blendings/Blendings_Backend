@@ -19,5 +19,5 @@ class CoupleMapPersistenceAdapter(
         )
 
     override fun existsCoupleMapByNickname(nickname: String): Boolean =
-        coupleMapRepository.existsById(nickname)
+        coupleMapRepository.findByNickname(nickname) != null
 }

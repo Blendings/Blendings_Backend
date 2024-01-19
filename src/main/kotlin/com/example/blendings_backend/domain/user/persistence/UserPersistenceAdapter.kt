@@ -19,5 +19,5 @@ class UserPersistenceAdapter(
         )
 
     override fun existsUserByMailAddress(mailAddress: String): Boolean =
-        userRepository.existsByMailAddress(mailAddress)
+        userRepository.findByMailAddress(mailAddress)
 }
