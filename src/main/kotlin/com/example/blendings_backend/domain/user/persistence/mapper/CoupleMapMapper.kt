@@ -1,5 +1,6 @@
-package com.example.blendings_backend.domain.user.persistence
+package com.example.blendings_backend.domain.user.persistence.mapper
 
+import com.example.blendings_backend.domain.user.persistence.entity.CoupleMapJpaEntity
 import com.example.blendings_backend.domain.user.service.vo.CoupleMapModel
 import com.example.blendings_backend.global.annotation.Mapper
 

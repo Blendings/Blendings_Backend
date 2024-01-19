@@ -1,4 +1,4 @@
-package com.example.blendings_backend.domain.user.persistence
+package com.example.blendings_backend.domain.user.persistence.entity
 
 import com.example.blendings_backend.domain.base.entty.BaseUUIDEntity
 import java.time.LocalDate

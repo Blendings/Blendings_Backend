@@ -1,5 +1,7 @@
 package com.example.blendings_backend.domain.user.persistence
 
+import com.example.blendings_backend.domain.user.persistence.mapper.CoupleMapMapper
+import com.example.blendings_backend.domain.user.persistence.repository.CoupleMapRepository
 import com.example.blendings_backend.domain.user.service.vo.CoupleMapModel
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsCoupleMapByNicknamePort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveCoupleMapPort

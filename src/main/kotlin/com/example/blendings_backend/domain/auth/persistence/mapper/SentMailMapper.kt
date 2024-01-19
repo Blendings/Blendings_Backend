@@ -1,5 +1,6 @@
-package com.example.blendings_backend.domain.auth.persistence
+package com.example.blendings_backend.domain.auth.persistence.mapper
 
+import com.example.blendings_backend.domain.auth.persistence.entity.SentMailEntity
 import com.example.blendings_backend.domain.auth.service.vo.SentMailModel
 import com.example.blendings_backend.global.annotation.Mapper
 
