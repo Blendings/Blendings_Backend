@@ -15,7 +15,7 @@ class CustomUserDetailsService(
     override fun loadUserByUsername(username: String?): UserDetails =
         CustomUserDetails(
             UserMapper.toModel(
-                userRepository.findByIdOrNull(UUID.fromString(username)) ?: throw UnauthorizedException
+                userRepository.findById(UUID.fromString(username)) ?: throw UnauthorizedException
             )
         )
 }
