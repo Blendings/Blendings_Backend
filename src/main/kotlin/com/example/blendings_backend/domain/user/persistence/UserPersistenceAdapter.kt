@@ -2,15 +2,17 @@ package com.example.blendings_backend.domain.user.persistence
 
 import com.example.blendings_backend.domain.user.persistence.mapper.UserMapper
 import com.example.blendings_backend.domain.user.persistence.repository.UserRepository
-import com.example.blendings_backend.domain.user.service.vo.UserModel
 import com.example.blendings_backend.domain.user.service.port.out.persistence.ExistsUserByMailPort
+import com.example.blendings_backend.domain.user.service.port.out.persistence.FindUserByMailPort
 import com.example.blendings_backend.domain.user.service.port.out.persistence.SaveUserPort
+import com.example.blendings_backend.domain.user.service.vo.UserModel
 import com.example.blendings_backend.global.annotation.PersistenceAdapter
 
 @PersistenceAdapter
 class UserPersistenceAdapter(
     private val userRepository: UserRepository
 ) : SaveUserPort,
+    FindUserByMailPort,
     ExistsUserByMailPort {
 
     override fun saveUser(userModel: UserModel): UserModel =
@@ -18,6 +20,9 @@ class UserPersistenceAdapter(
             userRepository.save(UserMapper.toEntity(userModel))
         )
 
+    override fun findUserByMailAddress(mailAddress: String): UserModel? =
+        userRepository.findByMailAddress(mailAddress)?.let { UserMapper.toModel(it) }
+
     override fun existsUserByMailAddress(mailAddress: String): Boolean =
-        userRepository.findByMailAddress(mailAddress)
+        userRepository.findByMailAddress(mailAddress) != null
 }

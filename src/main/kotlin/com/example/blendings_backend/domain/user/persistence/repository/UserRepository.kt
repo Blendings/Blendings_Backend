@@ -8,5 +8,5 @@ interface UserRepository : Repository<UserJpaEntity, UUID> {
 
     fun save(userJpaEntity: UserJpaEntity): UserJpaEntity
 
-    fun findByMailAddress(mail: String): Boolean
+    fun findByMailAddress(mail: String): UserJpaEntity?
 }
