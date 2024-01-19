@@ -24,7 +24,7 @@ class SentMailPersistenceAdapter(
         )
 
     override fun findSentMailByMailAddress(mailAddress: String): SentMailModel? =
-        sentMailRepository.findByIdOrNull(mailAddress)?.let {
+        sentMailRepository.findByMailAddress(mailAddress)?.let {
             SentMailMapper.toModel(it)
         }
 
@@ -34,6 +34,6 @@ class SentMailPersistenceAdapter(
         }
 
     override fun deleteSentMailByMailAddress(mailAddress: String) {
-        sentMailRepository.deleteById(mailAddress)
+        sentMailRepository.deleteByMailAddress(mailAddress)
     }
 }
