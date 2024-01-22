@@ -5,6 +5,7 @@ import java.util.*
 
 data class UserModel(
     val name: String,
+    val nickname: String? = null,
     val birthDate: LocalDate,
     val mailAddress: String,
     val password: String,

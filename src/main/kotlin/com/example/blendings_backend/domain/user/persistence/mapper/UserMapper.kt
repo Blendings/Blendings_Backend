@@ -8,8 +8,8 @@ import com.example.blendings_backend.global.annotation.Mapper
 object UserMapper {
 
     fun toModel(userJpaEntity: UserJpaEntity): UserModel =
-        userJpaEntity.run { UserModel(name, birthDate, mailAddress, password, id) }
+        userJpaEntity.run { UserModel(name, nickname, birthDate, mailAddress, password, id) }
 
     fun toEntity(userModel: UserModel): UserJpaEntity =
-        userModel.run { UserJpaEntity(name, birthDate, mailAddress, password, id) }
+        userModel.run { UserJpaEntity(name, nickname, birthDate, mailAddress, password, id) }
 }
