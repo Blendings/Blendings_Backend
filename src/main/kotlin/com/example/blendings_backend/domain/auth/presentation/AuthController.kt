@@ -1,7 +1,7 @@
 package com.example.blendings_backend.domain.auth.presentation
 
 import com.example.blendings_backend.domain.auth.presentation.dto.request.*
-import com.example.blendings_backend.domain.auth.service.dto.TokenResponse
+import com.example.blendings_backend.domain.auth.service.dto.LoggedUserInfoResponse
 import com.example.blendings_backend.domain.auth.service.port.`in`.*
 import com.example.blendings_backend.global.annotation.WebAdapter
 import org.springframework.http.HttpStatus
@@ -44,6 +44,6 @@ class AuthController(
     fun login(
         httpServletRequest: HttpServletRequest,
         @RequestBody @Valid loginWebRequest: LoginWebRequest
-    ): TokenResponse =
+    ): LoggedUserInfoResponse =
         loginUseCase.login(httpServletRequest, loginWebRequest.toDomainRequest())
 }
