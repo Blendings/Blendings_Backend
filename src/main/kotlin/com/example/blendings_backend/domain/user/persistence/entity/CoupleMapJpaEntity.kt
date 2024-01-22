@@ -1,27 +1,29 @@
 package com.example.blendings_backend.domain.user.persistence.entity
 
+import com.example.blendings_backend.global.consts.TableName
 import java.time.LocalDate
 import javax.persistence.*
 
-@Entity
+@Entity(name = TableName.COUPLE_MAP_TABLE_NAME)
 class CoupleMapJpaEntity(
     maleUser: UserJpaEntity,
     femaleUser: UserJpaEntity,
     metDate: LocalDate,
     nickname: String
 ) {
+
     @OneToOne
-    @JoinColumn(name = "male_user_id", updatable = false, nullable = false)
+    @JoinColumn(name = "male_user_id", unique = true, updatable = false, nullable = false)
     val maleUser: UserJpaEntity = maleUser
 
     @OneToOne
-    @JoinColumn(name = "female_user_id", updatable = false, nullable = false)
+    @JoinColumn(name = "female_user_id", unique = true, updatable = false, nullable = false)
     val femaleUser: UserJpaEntity = femaleUser
 
     @Column(name = "met_date", updatable = false, nullable = false)
     val metDate: LocalDate = metDate
 
     @Id
-    @Column(name = "nickname", updatable = true, unique = true, nullable = false)
+    @Column(name = "nickname", unique = true, updatable = true, nullable = false)
     val nickname: String = nickname
 }
