@@ -1,8 +1,5 @@
 package com.example.blendings_backend.domain.auth.service.dto
 
 data class LoggedUserInfoResponse(
-
-    val coupleNickname: String,
-
-    val isLoverLogged: Boolean
+    val coupleNickname: String
 )
