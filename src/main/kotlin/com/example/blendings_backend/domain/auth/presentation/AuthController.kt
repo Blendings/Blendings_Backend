@@ -44,6 +44,14 @@ class AuthController(
     fun login(
         httpServletRequest: HttpServletRequest,
         @RequestBody @Valid loginWebRequest: LoginWebRequest
-    ): LoggedUserInfoResponse =
-        loginUseCase.login(httpServletRequest, loginWebRequest.toDomainRequest())
+    ) {
+        val response = loginUseCase.login(loginWebRequest.toDomainRequest())
+
+        httpServletRequest.session.invalidate()
+        val session = httpServletRequest.session
+        session.run {
+            setAttribute("mailAddress", loginWebRequest.mailAddress)
+            setAttribute("coupleNickname", response.coupleNickname)
+        }
+    }
 }
