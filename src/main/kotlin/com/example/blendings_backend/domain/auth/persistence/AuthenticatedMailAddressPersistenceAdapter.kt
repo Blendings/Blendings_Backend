@@ -25,7 +25,7 @@ class AuthenticatedMailAddressPersistenceAdapter(
         )
 
     override fun existsAuthenticatedMailAddress(mailAddress: String): Boolean =
-        authenticatedMailAddressRepository.findByMailAddress(mailAddress) != null
+        authenticatedMailAddressRepository.findById(mailAddress) != null
 
     override fun deleteAuthenticatedMail(model: AuthenticatedMailAddressModel) {
         authenticatedMailAddressRepository.delete(

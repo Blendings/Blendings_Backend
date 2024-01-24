@@ -7,9 +7,7 @@ interface SentMailRepository : Repository<SentMailEntity, String> {
 
     fun save(sentMailEntity: SentMailEntity): SentMailEntity
 
-    fun findByMailAddress(mailAddress: String): SentMailEntity?
+    fun findById(id: String): SentMailEntity?
 
-    fun findByAuthenticationCode(authenticationCode: String): SentMailEntity?
-
-    fun deleteByMailAddress(mailAddress: String)
+    fun deleteById(id: String)
 }
