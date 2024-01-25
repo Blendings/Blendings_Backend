@@ -7,7 +7,7 @@ interface AuthenticatedMailAddressRepository : Repository<AuthenticatedMailAddre
 
     fun save(authenticatedMailAddressEntity: AuthenticatedMailAddressEntity): AuthenticatedMailAddressEntity
 
-    fun findByMailAddress(mailAddress: String): AuthenticatedMailAddressEntity?
+    fun findById(id: String): AuthenticatedMailAddressEntity?
 
     fun delete(authenticatedMailAddressEntity: AuthenticatedMailAddressEntity)
 }
