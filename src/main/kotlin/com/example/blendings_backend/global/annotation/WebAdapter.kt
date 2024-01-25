@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 @RestController
 @Adapter
-annotation class WebAdapter()
+annotation class WebAdapter
 /**
  * Controller에 사용
  */

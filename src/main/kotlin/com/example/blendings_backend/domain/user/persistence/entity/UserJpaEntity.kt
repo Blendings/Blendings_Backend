@@ -4,7 +4,8 @@ import com.example.blendings_backend.domain.base.entty.BaseUUIDEntity
 import com.example.blendings_backend.global.consts.TableName
 import java.time.LocalDate
 import java.util.*
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
 
 @Entity(name = TableName.USER_TABLE_NAME)
 class UserJpaEntity(
