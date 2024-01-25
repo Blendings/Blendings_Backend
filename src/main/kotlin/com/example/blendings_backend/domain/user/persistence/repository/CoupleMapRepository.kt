@@ -6,6 +6,7 @@ import com.example.blendings_backend.global.consts.TableName
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.Repository
+import org.springframework.data.repository.query.Param
 
 interface CoupleMapRepository : Repository<CoupleMapJpaEntity, String> {
 
@@ -14,10 +15,10 @@ interface CoupleMapRepository : Repository<CoupleMapJpaEntity, String> {
     fun findByNickname(nickname: String): CoupleMapJpaEntity?
 
     @Query(
-        value = "SELECT *" +
-                "FROM ${TableName.COUPLE_MAP_TABLE_NAME} c" +
-                "WHERE c.male_user_id = :userJpaEntity.id OR c.female_user_id = :userJpaEntity.id",
+        value = "SELECT * " +
+                "FROM ${TableName.COUPLE_MAP_TABLE_NAME} c " +
+                "WHERE c.male_user_id = :#{#userJpaEntity.id} OR c.female_user_id = :#{#userJpaEntity.id}",
         nativeQuery = true
     )
-    fun findByUser(userJpaEntity: UserJpaEntity): CoupleMapJpaEntity?
+    fun findByUser(@Param(value = "userJpaEntity") userJpaEntity: UserJpaEntity): CoupleMapJpaEntity?
 }
