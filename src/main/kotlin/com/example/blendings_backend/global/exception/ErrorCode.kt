@@ -27,5 +27,6 @@ enum class ErrorCode(
 
     // Date
     MET_DAY_AFTER_THAN_CURRENT_DAY(HttpStatus.BAD_REQUEST, "만난 날은 미래일 수 없습니다."),
-    MET_DAY_BEFORE_THAN_BIRTHDAY(HttpStatus.BAD_REQUEST, "만난 날은 생일보다 과거일 수 없습니다.")
+    MET_DAY_BEFORE_THAN_BIRTHDAY(HttpStatus.BAD_REQUEST, "만난 날은 생일보다 과거일 수 없습니다."),
+    INVALID_DAY(HttpStatus.BAD_REQUEST, "무효한 날짜입니다.")
 }
