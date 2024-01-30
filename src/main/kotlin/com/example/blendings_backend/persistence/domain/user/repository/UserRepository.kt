@@ -1,6 +1,6 @@
 package com.example.blendings_backend.persistence.domain.user.repository
 
-import com.example.blendings_backend.persistence.domain.user.entity.UserJpaEntity
+import com.example.blendings_backend.usecase.domain.user.vo.UserJpaEntity
 import org.springframework.data.repository.Repository
 import java.util.*
 

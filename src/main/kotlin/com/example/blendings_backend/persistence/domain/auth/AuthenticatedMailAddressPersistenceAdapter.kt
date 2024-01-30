@@ -1,11 +1,10 @@
 package com.example.blendings_backend.persistence.domain.auth
 
-import com.example.blendings_backend.persistence.domain.auth.mapper.AuthenticatedMailAddressMapper
 import com.example.blendings_backend.persistence.domain.auth.repository.AuthenticatedMailAddressRepository
 import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailPort
 import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailPort
 import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
-import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressModel
+import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressRedisEntity
 import com.example.blendings_backend.usecase.global.annotation.PersistenceAdapter
 
 @PersistenceAdapter
@@ -16,20 +15,14 @@ class AuthenticatedMailAddressPersistenceAdapter(
     DeleteAuthenticatedMailPort {
 
     override fun saveAuthenticatedMailAddress(
-        domain: AuthenticatedMailAddressModel
-    ): AuthenticatedMailAddressModel =
-        AuthenticatedMailAddressMapper.toModel(
-            authenticatedMailAddressRepository.save(
-                AuthenticatedMailAddressMapper.toEntity(domain)
-            )
-        )
+        entity: AuthenticatedMailAddressRedisEntity
+    ): AuthenticatedMailAddressRedisEntity =
+        authenticatedMailAddressRepository.save(entity)
 
     override fun existsAuthenticatedMailAddress(mailAddress: String): Boolean =
         authenticatedMailAddressRepository.findById(mailAddress) != null
 
-    override fun deleteAuthenticatedMail(model: AuthenticatedMailAddressModel) {
-        authenticatedMailAddressRepository.delete(
-            AuthenticatedMailAddressMapper.toEntity(model)
-        )
+    override fun deleteAuthenticatedMail(entity: AuthenticatedMailAddressRedisEntity) {
+        authenticatedMailAddressRepository.delete(entity)
     }
 }

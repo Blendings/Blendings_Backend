@@ -1,13 +1,13 @@
 package com.example.blendings_backend.persistence.domain.auth.repository
 
-import com.example.blendings_backend.persistence.domain.auth.entity.AuthenticatedMailAddressEntity
+import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressRedisEntity
 import org.springframework.data.repository.Repository
 
-interface AuthenticatedMailAddressRepository : Repository<AuthenticatedMailAddressEntity, String> {
+interface AuthenticatedMailAddressRepository : Repository<AuthenticatedMailAddressRedisEntity, String> {
 
-    fun save(authenticatedMailAddressEntity: AuthenticatedMailAddressEntity): AuthenticatedMailAddressEntity
+    fun save(authenticatedMailAddressRedisEntity: AuthenticatedMailAddressRedisEntity): AuthenticatedMailAddressRedisEntity
 
-    fun findById(id: String): AuthenticatedMailAddressEntity?
+    fun findById(id: String): AuthenticatedMailAddressRedisEntity?
 
-    fun delete(authenticatedMailAddressEntity: AuthenticatedMailAddressEntity)
+    fun delete(authenticatedMailAddressRedisEntity: AuthenticatedMailAddressRedisEntity)
 }

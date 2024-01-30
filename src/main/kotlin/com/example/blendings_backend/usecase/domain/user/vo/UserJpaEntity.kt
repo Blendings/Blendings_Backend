@@ -1,4 +1,4 @@
-package com.example.blendings_backend.persistence.domain.user.entity
+package com.example.blendings_backend.usecase.domain.user.vo
 
 import com.example.blendings_backend.persistence.global.entty.BaseUUIDEntity
 import com.example.blendings_backend.usecase.global.consts.TableName
@@ -12,7 +12,7 @@ class UserJpaEntity(
     name: String,
     nickname: String? = null,
     birthDate: LocalDate,
-    mail: String,
+    mailAddress: String,
     password: String,
     id: UUID? = null
 ) : BaseUUIDEntity(id) {
@@ -27,7 +27,7 @@ class UserJpaEntity(
     val birthDate: LocalDate = birthDate
 
     @Column(name = "mail_address", unique = true, updatable = true, nullable = false)
-    val mailAddress: String = mail
+    val mailAddress: String = mailAddress
 
     @Column(name = "password", updatable = true, nullable = false, length = 61)
     val password: String = password

@@ -14,8 +14,8 @@ import com.example.blendings_backend.usecase.domain.auth.service.port.out.persis
 import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.FindSentMailByMailAddressPort
 import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
 import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.SaveSentMailPort
-import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressModel
-import com.example.blendings_backend.usecase.domain.auth.service.vo.SentMailModel
+import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressRedisEntity
+import com.example.blendings_backend.usecase.domain.auth.service.vo.SentMailRedisEntity
 import com.example.blendings_backend.usecase.global.annotation.Interactor
 import java.util.*
 import kotlin.random.Random
@@ -42,7 +42,7 @@ class MailAuthenticationInteractor(
     override fun authenticateMailAddress(dto: AuthenticateMailRequest) {
         verifyMatchAuthenticationCodeWithSaved(dto.mailAddress, dto.authenticationCode)
         deleteSentMailByMailAddressPort.deleteSentMailByMailAddress(dto.mailAddress)
-        saveAuthenticatedMailPort.saveAuthenticatedMailAddress(AuthenticatedMailAddressModel(dto.mailAddress))
+        saveAuthenticatedMailPort.saveAuthenticatedMailAddress(AuthenticatedMailAddressRedisEntity(dto.mailAddress))
     }
 
     private fun sendMailOne(mailAddress: String) {
@@ -50,7 +50,7 @@ class MailAuthenticationInteractor(
             ?.let { throw InAuthenticateMailAddressException }
         val authenticationCode = createCode()
         sendAuthenticationMailPort.sendAuthenticationMail(mailAddress, authenticationCode)
-        saveSentMailPort.saveSentMail(SentMailModel(mailAddress, authenticationCode))
+        saveSentMailPort.saveSentMail(SentMailRedisEntity(mailAddress, authenticationCode))
     }
 
     private fun deletePreviouslySentMail(mail: String) {

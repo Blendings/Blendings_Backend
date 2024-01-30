@@ -1,11 +1,11 @@
 package com.example.blendings_backend.infrastructure.security.user
 
-import com.example.blendings_backend.usecase.domain.user.vo.UserModel
+import com.example.blendings_backend.usecase.domain.user.vo.UserJpaEntity
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class CustomUserDetails(
-    val user: UserModel
+    val user: UserJpaEntity
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> =

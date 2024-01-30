@@ -6,13 +6,13 @@ import com.example.blendings_backend.usecase.domain.auth.service.exception.*
 import com.example.blendings_backend.usecase.domain.auth.service.port.`in`.SignUseCase
 import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailPort
 import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailPort
-import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressModel
+import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressRedisEntity
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.ExistsCoupleMapByNicknamePort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.ExistsUserByMailPort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.SaveCoupleMapPort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.SaveUserPort
-import com.example.blendings_backend.usecase.domain.user.vo.CoupleMapModel
-import com.example.blendings_backend.usecase.domain.user.vo.UserModel
+import com.example.blendings_backend.usecase.domain.user.vo.CoupleMapJpaEntity
+import com.example.blendings_backend.usecase.domain.user.vo.UserJpaEntity
 import com.example.blendings_backend.usecase.global.annotation.Interactor
 import com.example.blendings_backend.usecase.global.convertor.LocalDateConvertor
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -57,8 +57,8 @@ class SignInteractor(
     }
 
     private fun nullifyAuthenticationOfMailAddress(maleMailAddress: String, femaleMailAddress: String) {
-        deleteAuthenticatedMailPort.deleteAuthenticatedMail(AuthenticatedMailAddressModel(maleMailAddress))
-        deleteAuthenticatedMailPort.deleteAuthenticatedMail(AuthenticatedMailAddressModel(femaleMailAddress))
+        deleteAuthenticatedMailPort.deleteAuthenticatedMail(AuthenticatedMailAddressRedisEntity(maleMailAddress))
+        deleteAuthenticatedMailPort.deleteAuthenticatedMail(AuthenticatedMailAddressRedisEntity(femaleMailAddress))
     }
 
     private fun verifyMetDayNotBeforeThanTwoBirthdays(
@@ -97,9 +97,9 @@ class SignInteractor(
         ) throw DuplicatedMailAddressException
     }
 
-    private fun createAndSaveUser(signInfo: SignInfoDto): UserModel =
+    private fun createAndSaveUser(signInfo: SignInfoDto): UserJpaEntity =
         saveUserPort.saveUser(signInfo.run {
-            UserModel(
+            UserJpaEntity(
                 name = name,
                 birthDate = LocalDateConvertor.convertStringToLocalDate(birthDay),
                 mailAddress = mailAddress,
@@ -108,12 +108,12 @@ class SignInteractor(
         })
 
     private fun createAndSaveCoupleMap(
-        maleUserModel: UserModel, femaleUserModel: UserModel, metDay: String, coupleNickname: String
-    ): CoupleMapModel =
+        maleUserJpaEntity: UserJpaEntity, femaleUserJpaEntity: UserJpaEntity, metDay: String, coupleNickname: String
+    ): CoupleMapJpaEntity =
         saveCoupleMapPort.saveCoupleMap(
-            CoupleMapModel(
-                maleUser = maleUserModel,
-                femaleUser = femaleUserModel,
+            CoupleMapJpaEntity(
+                maleUser = maleUserJpaEntity,
+                femaleUser = femaleUserJpaEntity,
                 metDate = LocalDateConvertor.convertStringToLocalDate(metDay),
                 nickname = coupleNickname
             )
