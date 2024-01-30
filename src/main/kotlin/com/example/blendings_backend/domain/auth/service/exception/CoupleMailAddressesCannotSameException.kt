@@ -1,6 +1,0 @@
-package com.example.blendings_backend.domain.auth.service.exception
-
-import com.example.blendings_backend.global.exception.ErrorCode
-import com.example.blendings_backend.global.exception.GlobalException
-
-object CoupleMailAddressesCannotSameException : GlobalException(ErrorCode.COUPLE_MAIL_ADDRESSES_CANNOT_SAME)
