@@ -43,10 +43,10 @@ class SimpleHttpSessionContextManagerProxy : SimpleHttpSessionContextManager() {
     }
 
     private fun commit() {
-        sessionContextSave = sessionContext
+        sessionContextSave = sessionContext.toMutableMap()
     }
 
     private fun rollback() {
-        sessionContext = sessionContextSave
+        sessionContext = sessionContextSave.toMutableMap()
     }
 }
