@@ -1,5 +1,6 @@
 package com.example.blendings_backend.persistence.domain.user
 
+import com.example.blendings_backend.persistence.domain.user.mapper.UserMapper
 import com.example.blendings_backend.persistence.domain.user.repository.UserRepository
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.ExistsUserByMailPort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.FindUserByMailPort

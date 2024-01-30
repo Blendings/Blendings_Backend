@@ -1,21 +1,21 @@
 package com.example.blendings_backend.usecase.domain.auth.service
 
-import com.example.blendings_backend.domain.auth.service.vo.AuthenticatedMailAddressModel
-import com.example.blendings_backend.domain.auth.service.vo.SentMailModel
-import com.example.blendings_backend.domain.auth.service.dto.AuthenticateMailRequest
-import com.example.blendings_backend.domain.auth.service.dto.ResendMailRequest
-import com.example.blendings_backend.domain.auth.service.dto.SendMailRequest
-import com.example.blendings_backend.domain.auth.service.exception.AuthenticationMailUnsentException
-import com.example.blendings_backend.domain.auth.service.exception.InAuthenticateMailAddressException
-import com.example.blendings_backend.domain.auth.service.exception.MisMatchAuthenticationCodeException
-import com.example.blendings_backend.domain.auth.service.port.`in`.AuthenticateMailAddressUseCase
-import com.example.blendings_backend.domain.auth.service.port.`in`.ResendMailUseCase
-import com.example.blendings_backend.domain.auth.service.port.`in`.SendAuthenticationMailUseCase
-import com.example.blendings_backend.domain.auth.service.port.out.SendAuthenticationMailPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteSentMailByMailAddressPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindSentMailByMailAddressPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.SaveSentMailPort
+import com.example.blendings_backend.usecase.domain.auth.service.dto.AuthenticateMailRequest
+import com.example.blendings_backend.usecase.domain.auth.service.dto.ResendMailRequest
+import com.example.blendings_backend.usecase.domain.auth.service.dto.SendMailRequest
+import com.example.blendings_backend.usecase.domain.auth.service.exception.AuthenticationMailUnsentException
+import com.example.blendings_backend.usecase.domain.auth.service.exception.InAuthenticateMailAddressException
+import com.example.blendings_backend.usecase.domain.auth.service.exception.MisMatchAuthenticationCodeException
+import com.example.blendings_backend.usecase.domain.auth.service.port.`in`.AuthenticateMailAddressUseCase
+import com.example.blendings_backend.usecase.domain.auth.service.port.`in`.ResendMailUseCase
+import com.example.blendings_backend.usecase.domain.auth.service.port.`in`.SendAuthenticationMailUseCase
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.SendAuthenticationMailPort
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.DeleteSentMailByMailAddressPort
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.FindSentMailByMailAddressPort
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.SaveSentMailPort
+import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressModel
+import com.example.blendings_backend.usecase.domain.auth.service.vo.SentMailModel
 import com.example.blendings_backend.usecase.global.annotation.Interactor
 import java.util.*
 import kotlin.random.Random
@@ -46,7 +46,8 @@ class MailAuthenticationInteractor(
     }
 
     private fun sendMailOne(mailAddress: String) {
-        findSentMailByMailAddressPort.findSentMailByMailAddress(mailAddress)?.let { throw InAuthenticateMailAddressException }
+        findSentMailByMailAddressPort.findSentMailByMailAddress(mailAddress)
+            ?.let { throw InAuthenticateMailAddressException }
         val authenticationCode = createCode()
         sendAuthenticationMailPort.sendAuthenticationMail(mailAddress, authenticationCode)
         saveSentMailPort.saveSentMail(SentMailModel(mailAddress, authenticationCode))
@@ -57,7 +58,8 @@ class MailAuthenticationInteractor(
     }
 
     private fun verifyMatchAuthenticationCodeWithSaved(mail: String, authenticationCode: String) {
-        val sentMail = findSentMailByMailAddressPort.findSentMailByMailAddress(mail) ?: throw AuthenticationMailUnsentException
+        val sentMail =
+            findSentMailByMailAddressPort.findSentMailByMailAddress(mail) ?: throw AuthenticationMailUnsentException
         if (sentMail.authenticationCode != authenticationCode) throw MisMatchAuthenticationCodeException
     }
 

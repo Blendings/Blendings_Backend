@@ -1,6 +1,6 @@
 package com.example.blendings_backend.infrastructure.mail
 
-import com.example.blendings_backend.domain.auth.service.port.out.SendAuthenticationMailPort
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.SendAuthenticationMailPort
 import com.example.blendings_backend.usecase.global.annotation.Adapter
 import org.thymeleaf.context.Context
 import org.thymeleaf.spring5.SpringTemplateEngine

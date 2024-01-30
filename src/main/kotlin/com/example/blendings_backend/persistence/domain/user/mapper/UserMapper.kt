@@ -1,5 +1,6 @@
-package com.example.blendings_backend.persistence.domain.user
+package com.example.blendings_backend.persistence.domain.user.mapper
 
+import com.example.blendings_backend.persistence.domain.user.entity.UserJpaEntity
 import com.example.blendings_backend.usecase.domain.user.vo.UserModel
 import com.example.blendings_backend.usecase.global.annotation.Mapper
 

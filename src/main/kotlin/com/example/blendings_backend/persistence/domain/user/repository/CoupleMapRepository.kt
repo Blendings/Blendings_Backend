@@ -1,7 +1,7 @@
 package com.example.blendings_backend.persistence.domain.user.repository
 
-import com.example.blendings_backend.persistence.domain.user.CoupleMapJpaEntity
-import com.example.blendings_backend.persistence.domain.user.UserJpaEntity
+import com.example.blendings_backend.persistence.domain.user.entity.CoupleMapJpaEntity
+import com.example.blendings_backend.persistence.domain.user.entity.UserJpaEntity
 import com.example.blendings_backend.usecase.global.consts.TableName
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.Repository

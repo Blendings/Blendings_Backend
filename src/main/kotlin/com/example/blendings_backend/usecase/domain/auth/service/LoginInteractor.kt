@@ -1,11 +1,11 @@
 package com.example.blendings_backend.usecase.domain.auth.service
 
-import com.example.blendings_backend.domain.auth.service.dto.LoggedUserInfoResponse
-import com.example.blendings_backend.domain.auth.service.dto.LoginRequest
-import com.example.blendings_backend.domain.auth.service.exception.PasswordMismatchException
-import com.example.blendings_backend.domain.auth.service.port.`in`.LoginUseCase
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.FindCoupleMapByUserPort
-import com.example.blendings_backend.persistence.domain.user.UserNotFoundException
+import com.example.blendings_backend.usecase.domain.user.exception.UserNotFoundException
+import com.example.blendings_backend.usecase.domain.auth.service.dto.LoggedUserInfoResponse
+import com.example.blendings_backend.usecase.domain.auth.service.dto.LoginRequest
+import com.example.blendings_backend.usecase.domain.auth.service.exception.PasswordMismatchException
+import com.example.blendings_backend.usecase.domain.auth.service.port.`in`.LoginUseCase
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.FindCoupleMapByUserPort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.FindUserByMailPort
 import com.example.blendings_backend.usecase.global.annotation.Interactor
 import org.springframework.security.crypto.password.PasswordEncoder

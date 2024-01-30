@@ -1,8 +1,8 @@
 package com.example.blendings_backend.presentation.domain.auth.dto.request
 
 import com.example.blendings_backend.presentation.domain.auth.AuthValidationValue
-import com.example.blendings_backend.domain.auth.service.dto.SignInfoDto
-import com.example.blendings_backend.domain.auth.service.dto.SignRequest
+import com.example.blendings_backend.usecase.domain.auth.service.dto.SignInfoDto
+import com.example.blendings_backend.usecase.domain.auth.service.dto.SignRequest
 import javax.validation.constraints.Pattern
 
 data class SignWebRequest(

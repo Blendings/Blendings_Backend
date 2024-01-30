@@ -1,12 +1,12 @@
 package com.example.blendings_backend.usecase.domain.auth.service
 
-import com.example.blendings_backend.domain.auth.service.dto.SignRequest
-import com.example.blendings_backend.domain.auth.service.dto.SignInfoDto
-import com.example.blendings_backend.domain.auth.service.exception.*
-import com.example.blendings_backend.domain.auth.service.port.`in`.SignUseCase
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailPort
-import com.example.blendings_backend.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailPort
-import com.example.blendings_backend.domain.auth.service.vo.AuthenticatedMailAddressModel
+import com.example.blendings_backend.usecase.domain.auth.service.dto.SignInfoDto
+import com.example.blendings_backend.usecase.domain.auth.service.dto.SignRequest
+import com.example.blendings_backend.usecase.domain.auth.service.exception.*
+import com.example.blendings_backend.usecase.domain.auth.service.port.`in`.SignUseCase
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailPort
+import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailPort
+import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressModel
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.ExistsCoupleMapByNicknamePort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.ExistsUserByMailPort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.SaveCoupleMapPort
