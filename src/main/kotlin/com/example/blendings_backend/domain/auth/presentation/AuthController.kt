@@ -1,13 +1,14 @@
 package com.example.blendings_backend.domain.auth.presentation
 
 import com.example.blendings_backend.domain.auth.presentation.dto.request.*
-import com.example.blendings_backend.domain.auth.service.dto.LoggedUserInfoResponse
 import com.example.blendings_backend.domain.auth.service.port.`in`.*
 import com.example.blendings_backend.global.annotation.WebAdapter
+import com.example.blendings_backend.global.consts.ValidationValue
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
+import javax.validation.constraints.NotBlank
 
 @RequestMapping("/auth")
 @WebAdapter
@@ -20,30 +21,53 @@ class AuthController(
 ) {
 
     @PostMapping("/sign/mail")
-    fun mailSend(@RequestBody @Valid request: SendMailWebRequest) {
+    fun mailSend(
+        @Valid
+        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @RequestBody
+        request: SendMailWebRequest
+    ) {
         sendAuthenticationMailUseCase.sendAuthenticationMailsToCouple(request.toDomainRequest())
     }
 
     @PostMapping("/sign/mail/resend")
-    fun mailResend(@RequestBody @Valid request: ResendMailWebRequest) {
+    fun mailResend(
+        @Valid
+        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @RequestBody
+        request: ResendMailWebRequest
+    ) {
         resendMailUseCase.resendMail(request.toDomainRequest())
     }
 
     @PostMapping("/sign/mail/authenticate")
-    fun mailAuthenticate(@RequestBody @Valid request: AuthenticateMailWebRequest) {
+    fun mailAuthenticate(
+        @Valid
+        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @RequestBody
+        request: AuthenticateMailWebRequest
+    ) {
         authenticateMailAddressUseCase.authenticateMailAddress(request.toDomainRequest())
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign/info")
-    fun sign(@RequestBody @Valid request: SignWebRequest) {
+    fun sign(
+        @Valid
+        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @RequestBody
+        request: SignWebRequest
+    ) {
         signUseCase.sign(request.toDomainRequest())
     }
 
     @GetMapping("/login")
     fun login(
         httpServletRequest: HttpServletRequest,
-        @RequestBody @Valid loginWebRequest: LoginWebRequest
+        @Valid
+        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @RequestBody
+        loginWebRequest: LoginWebRequest
     ) {
         val response = loginUseCase.login(loginWebRequest.toDomainRequest())
 
