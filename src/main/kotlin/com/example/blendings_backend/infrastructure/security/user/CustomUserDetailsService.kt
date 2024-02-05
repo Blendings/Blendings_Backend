@@ -14,6 +14,6 @@ class CustomUserDetailsService(
 
     override fun loadUserByUsername(username: String?): UserDetails =
         CustomUserDetails(
-            userRepository.findById(UUID.fromString(username)) ?: throw UnauthorizedException
+            userRepository.findByMailAddress(username!!) ?: throw UnauthorizedException
         )
 }

@@ -15,7 +15,7 @@ class CustomUserDetails(
         user.password
 
     override fun getUsername(): String =
-        user.id.toString()
+        user.mailAddress
 
     override fun isAccountNonExpired(): Boolean = true
 
