@@ -2,6 +2,7 @@ package com.example.blendings_backend.infrastructure.security.session.manager
 
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import javax.servlet.http.HttpSession
 
 @Primary
@@ -12,6 +13,7 @@ class SimpleHttpSessionContextManagerProxy : SimpleHttpSessionContextManager() {
         lateinit var sessionContextSave: MutableMap<String, HttpSession>
     }
 
+    @Synchronized
     override fun addSession(httpSession: HttpSession) {
         try {
             super.addSession(httpSession)
@@ -22,6 +24,7 @@ class SimpleHttpSessionContextManagerProxy : SimpleHttpSessionContextManager() {
         }
     }
 
+    @Synchronized
     override fun removeSession(httpSession: HttpSession) {
         try {
             super.removeSession(httpSession)
