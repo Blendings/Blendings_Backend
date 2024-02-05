@@ -1,7 +1,6 @@
 package com.example.blendings_backend.infrastructure.security.config
 
 import com.example.blendings_backend.infrastructure.filter.SecurityFilterChainConfig
-import com.example.blendings_backend.infrastructure.security.user.CustomUserDetailsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -12,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val customUserDetailsService: CustomUserDetailsService
+    private val securityFilterChainConfig: SecurityFilterChainConfig
 ) {
 
     @Bean
@@ -31,7 +30,11 @@ class SecurityConfig(
             .anyRequest().authenticated()
             .and()
 
-            .apply(SecurityFilterChainConfig(customUserDetailsService))
+            /*.exceptionHandling()
+            .accessDeniedHandler()
+            .and()*/
+
+            .apply(securityFilterChainConfig)
             .and()
 
             .build()

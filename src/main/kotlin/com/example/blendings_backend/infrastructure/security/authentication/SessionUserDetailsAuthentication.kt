@@ -19,13 +19,9 @@ class SessionUserDetailsAuthentication(
     override fun getCredentials(): Any =
         userDetails.password
 
-    override fun getDetails(): Any {
-        TODO("Not yet implemented")
-    }
+    override fun getDetails(): Any? = null
 
-    override fun getPrincipal(): Any {
-        TODO("Not yet implemented")
-    }
+    override fun getPrincipal(): Any? = null
 
     override fun isAuthenticated(): Boolean = true
 
