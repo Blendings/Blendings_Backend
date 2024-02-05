@@ -1,6 +1,7 @@
 package com.example.blendings_backend.presentation.domain.auth.dto.request
 
 import com.example.blendings_backend.presentation.domain.auth.AuthValidationValue
+import com.example.blendings_backend.presentation.global.WebRequest
 import com.example.blendings_backend.usecase.domain.auth.service.dto.SignInfoDto
 import com.example.blendings_backend.usecase.domain.auth.service.dto.SignRequest
 import javax.validation.constraints.Pattern
@@ -36,8 +37,8 @@ data class SignWebRequest(
 
     @Pattern(regexp = AuthValidationValue.COUPLE_NICKNAME_REGEXP, message = AuthValidationValue.COUPLE_NICKNAME_MESSAGE)
     val coupleNickname: String
-) {
-    fun toDomainRequest(): SignRequest =
+) : WebRequest<SignRequest> {
+    override fun toDomainRequest(): SignRequest =
         SignRequest(
             maleSignInfo = SignInfoDto(maleName, maleBirthDay, maleMailAddress, malePassword),
             femaleSignInfo = SignInfoDto(femaleName, femaleBirthDay, femaleMailAddress, femalePassword),
