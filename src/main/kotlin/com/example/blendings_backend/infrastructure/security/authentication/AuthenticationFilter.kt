@@ -18,13 +18,15 @@ class AuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+        if (request.getSession(false) != null) {
 
-        SecurityContextHolder.getContext().authentication = SessionUserDetailsAuthentication(
-            session = request.session,
-            userDetails = userDetailsService.loadUserByUsername(
-                request.session.getAttribute(HttpSessionContextManager.MAIL_ADDRESS_ATTRIBUTE_KEY).toString()
-            ) as CustomUserDetails
-        )
+            SecurityContextHolder.getContext().authentication = SessionUserDetailsAuthentication(
+                session = request.session,
+                userDetails = userDetailsService.loadUserByUsername(
+                    request.session.getAttribute(HttpSessionContextManager.MAIL_ADDRESS_ATTRIBUTE_KEY).toString()
+                ) as CustomUserDetails
+            )
+        }
 
         filterChain.doFilter(request, response)
     }
