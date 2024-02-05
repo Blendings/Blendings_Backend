@@ -1,6 +1,6 @@
 package com.example.blendings_backend.persistence.domain.auth.repository
 
-import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressRedisEntity
+import com.example.blendings_backend.usecase.domain.auth.vo.AuthenticatedMailAddressRedisEntity
 import org.springframework.data.repository.Repository
 
 interface AuthenticatedMailAddressRepository : Repository<AuthenticatedMailAddressRedisEntity, String> {

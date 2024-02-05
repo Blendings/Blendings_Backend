@@ -1,7 +1,7 @@
 package com.example.blendings_backend.presentation.domain.auth
 
 import com.example.blendings_backend.presentation.domain.auth.dto.request.*
-import com.example.blendings_backend.usecase.domain.auth.service.port.`in`.*
+import com.example.blendings_backend.usecase.domain.auth.port.`in`.*
 import com.example.blendings_backend.usecase.global.annotation.WebAdapter
 import com.example.blendings_backend.usecase.global.consts.ValidationValue
 import org.springframework.http.HttpStatus

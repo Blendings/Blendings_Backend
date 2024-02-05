@@ -1,6 +1,6 @@
 package com.example.blendings_backend.usecase.domain.user.vo
 
-import com.example.blendings_backend.persistence.global.entty.BaseUUIDEntity
+import com.example.blendings_backend.usecase.global.entty.BaseUUIDEntity
 import com.example.blendings_backend.usecase.global.consts.TableName
 import java.time.LocalDate
 import java.util.*

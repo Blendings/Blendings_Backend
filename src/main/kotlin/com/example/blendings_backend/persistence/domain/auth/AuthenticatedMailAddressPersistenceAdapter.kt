@@ -1,10 +1,10 @@
 package com.example.blendings_backend.persistence.domain.auth
 
 import com.example.blendings_backend.persistence.domain.auth.repository.AuthenticatedMailAddressRepository
-import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.DeleteAuthenticatedMailPort
-import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.ExistsAuthenticatedMailPort
-import com.example.blendings_backend.usecase.domain.auth.service.port.out.persistence.SaveAuthenticatedMailPort
-import com.example.blendings_backend.usecase.domain.auth.service.vo.AuthenticatedMailAddressRedisEntity
+import com.example.blendings_backend.usecase.domain.auth.port.out.persistence.DeleteAuthenticatedMailPort
+import com.example.blendings_backend.usecase.domain.auth.port.out.persistence.ExistsAuthenticatedMailPort
+import com.example.blendings_backend.usecase.domain.auth.port.out.persistence.SaveAuthenticatedMailPort
+import com.example.blendings_backend.usecase.domain.auth.vo.AuthenticatedMailAddressRedisEntity
 import com.example.blendings_backend.usecase.global.annotation.PersistenceAdapter
 
 @PersistenceAdapter
