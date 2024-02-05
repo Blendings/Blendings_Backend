@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession
 class SimpleHttpSessionContextManagerProxy : SimpleHttpSessionContextManager() {
 
     private companion object {
-        lateinit var sessionContextSave: MutableMap<String, HttpSession>
+        var sessionContextSave: MutableMap<String, HttpSession> = mutableMapOf()
     }
 
     @Synchronized

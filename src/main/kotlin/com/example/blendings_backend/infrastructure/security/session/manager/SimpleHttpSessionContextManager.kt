@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession
 class SimpleHttpSessionContextManager : HttpSessionContextManager {
 
     protected companion object {
-
         var sessionContext: MutableMap<String, HttpSession> = mutableMapOf()
     }
 
