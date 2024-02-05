@@ -4,8 +4,10 @@ import com.example.blendings_backend.persistence.domain.user.repository.UserRepo
 import com.example.blendings_backend.usecase.domain.auth.service.exception.UnauthorizedException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.stereotype.Component
 import java.util.*
 
+@Component
 class CustomUserDetailsService(
     private val userRepository: UserRepository
 ) : UserDetailsService {
