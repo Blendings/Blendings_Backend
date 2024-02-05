@@ -4,6 +4,10 @@ import javax.servlet.http.HttpSession
 
 interface HttpSessionContextManager {
 
+    companion object {
+        const val MAIL_ADDRESS_ATTRIBUTE_KEY = "mailAddress"
+    }
+
     fun addSession(httpSession: HttpSession)
 
     fun removeSession(httpSession: HttpSession)

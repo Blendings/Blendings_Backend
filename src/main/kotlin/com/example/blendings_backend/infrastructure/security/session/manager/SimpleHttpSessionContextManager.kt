@@ -1,5 +1,6 @@
 package com.example.blendings_backend.infrastructure.security.session.manager
 
+import com.example.blendings_backend.infrastructure.security.session.manager.HttpSessionContextManager.Companion.MAIL_ADDRESS_ATTRIBUTE_KEY
 import org.springframework.stereotype.Component
 import javax.servlet.http.HttpSession
 
@@ -9,8 +10,6 @@ class SimpleHttpSessionContextManager : HttpSessionContextManager {
     protected companion object {
 
         var sessionContext: MutableMap<String, HttpSession> = mutableMapOf()
-
-        const val MAIL_ADDRESS_ATTRIBUTE_KEY = "mailAddress"
     }
 
     override fun addSession(httpSession: HttpSession) {
