@@ -11,7 +11,7 @@ interface CoupleMapRepository : Repository<CoupleMapJpaEntity, String> {
 
     fun save(coupleMapJpaEntity: CoupleMapJpaEntity): CoupleMapJpaEntity
 
-    fun findByNickname(nickname: String): CoupleMapJpaEntity?
+    fun findById(id: String): CoupleMapJpaEntity?
 
     @Query(
         value = "SELECT * " +

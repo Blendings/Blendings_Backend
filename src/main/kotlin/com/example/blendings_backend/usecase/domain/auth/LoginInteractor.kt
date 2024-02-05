@@ -27,7 +27,7 @@ class LoginInteractor(
         val coupleMap = findCoupleMapByUserPort.findCoupleMapByUser(user)!!
 
         return LoggedUserInfoResponse(
-            coupleNickname = coupleMap.nickname
+            coupleNickname = coupleMap.id!!
         )
     }
 }

@@ -3,6 +3,7 @@ package com.example.blendings_backend.persistence.domain.user
 import com.example.blendings_backend.persistence.domain.user.repository.CoupleMapRepository
 import com.example.blendings_backend.usecase.domain.auth.port.out.persistence.FindCoupleMapByUserPort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.ExistsCoupleMapByNicknamePort
+import com.example.blendings_backend.usecase.domain.user.port.out.persistence.FindCoupleMapByNicknamePort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.SaveCoupleMapPort
 import com.example.blendings_backend.usecase.domain.user.vo.CoupleMapJpaEntity
 import com.example.blendings_backend.usecase.domain.user.vo.UserJpaEntity
@@ -13,6 +14,7 @@ class CoupleMapPersistenceAdapter(
     private val coupleMapRepository: CoupleMapRepository
 ) : SaveCoupleMapPort,
     FindCoupleMapByUserPort,
+    FindCoupleMapByNicknamePort,
     ExistsCoupleMapByNicknamePort {
 
     override fun saveCoupleMap(coupleMapJpaEntity: CoupleMapJpaEntity): CoupleMapJpaEntity =
@@ -21,6 +23,9 @@ class CoupleMapPersistenceAdapter(
     override fun findCoupleMapByUser(userJpaEntity: UserJpaEntity): CoupleMapJpaEntity? =
         coupleMapRepository.findByUser(userJpaEntity)
 
+    override fun findCoupleMapByNickname(nickname: String): CoupleMapJpaEntity? =
+        coupleMapRepository.findById(nickname)
+
     override fun existsCoupleMapByNickname(nickname: String): Boolean =
-        coupleMapRepository.findByNickname(nickname) != null
+        coupleMapRepository.findById(nickname) != null
 }
