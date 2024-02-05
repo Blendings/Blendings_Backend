@@ -1,4 +1,4 @@
-package com.example.blendings_backend.infrastructure.security.user
+package com.example.blendings_backend.infrastructure.security.authentication
 
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
@@ -27,11 +27,7 @@ class SessionUserDetailsAuthentication(
         TODO("Not yet implemented")
     }
 
-    override fun isAuthenticated(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isAuthenticated(): Boolean = true
 
-    override fun setAuthenticated(isAuthenticated: Boolean) {
-        TODO("Not yet implemented")
-    }
+    override fun setAuthenticated(isAuthenticated: Boolean) {}
 }
