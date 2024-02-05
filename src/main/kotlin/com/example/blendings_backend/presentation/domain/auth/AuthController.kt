@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
-import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @RequestMapping("/auth")
 @WebAdapter
@@ -23,7 +23,7 @@ class AuthController(
     @PostMapping("/sign/mail")
     fun mailSend(
         @Valid
-        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
         request: SendMailWebRequest
     ) {
@@ -33,7 +33,7 @@ class AuthController(
     @PostMapping("/sign/mail/resend")
     fun mailResend(
         @Valid
-        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
         request: ResendMailWebRequest
     ) {
@@ -43,7 +43,7 @@ class AuthController(
     @PostMapping("/sign/mail/authenticate")
     fun mailAuthenticate(
         @Valid
-        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
         request: AuthenticateMailWebRequest
     ) {
@@ -54,7 +54,7 @@ class AuthController(
     @PostMapping("/sign/info")
     fun sign(
         @Valid
-        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
         request: SignWebRequest
     ) {
@@ -65,7 +65,7 @@ class AuthController(
     fun login(
         httpServletRequest: HttpServletRequest,
         @Valid
-        @NotBlank(message = ValidationValue.REQUEST_BODY_MESSAGE)
+        @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
         loginWebRequest: LoginWebRequest
     ) {
