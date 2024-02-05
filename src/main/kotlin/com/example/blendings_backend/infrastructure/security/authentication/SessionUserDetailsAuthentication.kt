@@ -1,13 +1,13 @@
 package com.example.blendings_backend.infrastructure.security.authentication
 
+import com.example.blendings_backend.infrastructure.security.user.CustomUserDetails
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
 import javax.servlet.http.HttpSession
 
 class SessionUserDetailsAuthentication(
     val session: HttpSession,
-    val userDetails: UserDetails
+    val userDetails: CustomUserDetails
 ) : Authentication {
 
     override fun getName(): String =
