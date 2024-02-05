@@ -1,10 +1,6 @@
 package com.example.blendings_backend.usecase.global.entty
 
-import org.springframework.data.annotation.Id
-import javax.persistence.Column
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.MappedSuperclass
+import javax.persistence.*
 
 @MappedSuperclass
 abstract class BaseLongIdEntity(
