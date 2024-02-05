@@ -7,7 +7,7 @@ object ResponseEditor {
     const val HEADER_LOCATION_NAME = "Location"
 
     fun HttpServletResponse.setStatusCreated(): HttpServletResponse = apply {
-        status = 204
+        status = 201
     }
 
     fun HttpServletResponse.setLocationHeader(
