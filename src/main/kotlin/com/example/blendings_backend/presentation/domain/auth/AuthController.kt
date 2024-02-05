@@ -25,9 +25,9 @@ class AuthController(
         @Valid
         @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
-        request: SendMailWebRequest
+        request: SendMailWebRequest?
     ) {
-        sendAuthenticationMailUseCase.sendAuthenticationMailsToCouple(request.toDomainRequest())
+        sendAuthenticationMailUseCase.sendAuthenticationMailsToCouple(request!!.toDomainRequest())
     }
 
     @PostMapping("/sign/mail/resend")
@@ -35,9 +35,9 @@ class AuthController(
         @Valid
         @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
-        request: ResendMailWebRequest
+        request: ResendMailWebRequest?
     ) {
-        resendMailUseCase.resendMail(request.toDomainRequest())
+        resendMailUseCase.resendMail(request!!.toDomainRequest())
     }
 
     @PostMapping("/sign/mail/authenticate")
@@ -45,9 +45,9 @@ class AuthController(
         @Valid
         @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
-        request: AuthenticateMailWebRequest
+        request: AuthenticateMailWebRequest?
     ) {
-        authenticateMailAddressUseCase.authenticateMailAddress(request.toDomainRequest())
+        authenticateMailAddressUseCase.authenticateMailAddress(request!!.toDomainRequest())
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -56,9 +56,9 @@ class AuthController(
         @Valid
         @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
-        request: SignWebRequest
+        request: SignWebRequest?
     ) {
-        signUseCase.sign(request.toDomainRequest())
+        signUseCase.sign(request!!.toDomainRequest())
     }
 
     @GetMapping("/login")
@@ -67,9 +67,9 @@ class AuthController(
         @Valid
         @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
-        loginWebRequest: LoginWebRequest
+        loginWebRequest: LoginWebRequest?
     ) {
-        val response = loginUseCase.login(loginWebRequest.toDomainRequest())
+        val response = loginUseCase.login(loginWebRequest!!.toDomainRequest())
 
         httpServletRequest.session.invalidate()
         val session = httpServletRequest.session
