@@ -10,11 +10,11 @@ class CoupleMapJpaEntity(
     femaleUser: UserJpaEntity,
     metDate: LocalDate,
     nickname: String
-) {
+) : BaseEntity<String?>() {
 
     @Id
     @Column(name = "nickname", unique = true, updatable = true, nullable = false)
-    val nickname: String = nickname
+    override var id: String? = nickname
 
     @OneToOne
     @JoinColumn(name = "male_user_id", unique = true, updatable = false, nullable = false)

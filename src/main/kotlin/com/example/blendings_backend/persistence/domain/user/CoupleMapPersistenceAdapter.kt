@@ -24,8 +24,8 @@ class CoupleMapPersistenceAdapter(
         coupleMapRepository.findByUser(userJpaEntity)
 
     override fun findCoupleMapByNickname(nickname: String): CoupleMapJpaEntity? =
-        coupleMapRepository.findByNickname(nickname)
+        coupleMapRepository.findById(nickname)
 
     override fun existsCoupleMapByNickname(nickname: String): Boolean =
-        coupleMapRepository.findByNickname(nickname) != null
+        coupleMapRepository.findById(nickname) != null
 }

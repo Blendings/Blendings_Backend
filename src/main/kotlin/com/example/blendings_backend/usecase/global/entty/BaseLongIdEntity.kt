@@ -5,10 +5,9 @@ import javax.persistence.*
 @MappedSuperclass
 abstract class BaseLongIdEntity(
     id: Long?
-) {
+) : BaseEntity<Long?>() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    var id: Long? = id
-        protected set
+    override var id: Long? = id
 }
