@@ -34,8 +34,4 @@ class UserJpaEntity(
 
     @Column(name = "password", updatable = true, nullable = false, length = 61)
     val password: String = password
-
-    @OneToOne
-    @JoinColumn(name = "couple_nickname", updatable = true, nullable = false)
-    val coupleMapJpaEntity: CoupleMapJpaEntity? = null
 }

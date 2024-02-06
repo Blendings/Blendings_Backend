@@ -4,7 +4,7 @@ import com.example.blendings_backend.presentation.domain.auth.dto.request.*
 import com.example.blendings_backend.presentation.global.port.out.IssueSessionPort
 import com.example.blendings_backend.usecase.domain.auth.port.`in`.*
 import com.example.blendings_backend.usecase.global.annotation.WebAdapter
-import com.example.blendings_backend.usecase.global.consts.ValidationValue
+import com.example.blendings_backend.presentation.global.ValidationValue
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
