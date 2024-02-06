@@ -13,6 +13,7 @@ enum class ErrorCode(
     // Auth
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "유효한 자격 증명이 필요합니다."),
     PASSWORD_MISMATCH(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
+    INVALID_SESSION_ID(HttpStatus.UNAUTHORIZED, "Session Id가 유효하지 않습니다."),
 
     // User
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),

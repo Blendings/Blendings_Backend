@@ -1,13 +1,12 @@
 package com.example.blendings_backend.presentation.domain.auth
 
 import com.example.blendings_backend.presentation.domain.auth.dto.request.*
+import com.example.blendings_backend.presentation.global.ValidationValue
 import com.example.blendings_backend.presentation.global.port.out.IssueSessionPort
 import com.example.blendings_backend.usecase.domain.auth.port.`in`.*
 import com.example.blendings_backend.usecase.global.annotation.WebAdapter
-import com.example.blendings_backend.presentation.global.ValidationValue
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
@@ -65,7 +64,6 @@ class AuthController(
 
     @GetMapping("/login")
     fun login(
-        httpServletRequest: HttpServletRequest,
         @Valid
         @NotNull(message = ValidationValue.REQUEST_BODY_MESSAGE)
         @RequestBody
@@ -73,6 +71,6 @@ class AuthController(
     ) {
         val response = loginUseCase.login(loginWebRequest!!.toDomainRequest())
 
-        issueSessionPort.execute(httpServletRequest, loginWebRequest.mailAddress, response.coupleNickname)
+        issueSessionPort.execute(loginWebRequest.mailAddress, response.coupleNickname)
     }
 }

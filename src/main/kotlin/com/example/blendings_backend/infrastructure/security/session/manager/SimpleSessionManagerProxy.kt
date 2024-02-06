@@ -1,22 +1,21 @@
 package com.example.blendings_backend.infrastructure.security.session.manager
 
+import com.example.blendings_backend.infrastructure.security.session.Session
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
-import javax.servlet.http.HttpSession
 
 @Primary
 @Component
-class SimpleHttpSessionContextManagerProxy : SimpleHttpSessionContextManager() {
+class SimpleSessionManagerProxy : SimpleSessionManager() {
 
     private companion object {
-        var sessionContextSave: MutableMap<String, HttpSession> = mutableMapOf()
+        var sessionContextSave: MutableMap<String, Session> = mutableMapOf()
     }
 
     @Synchronized
-    override fun addSession(httpSession: HttpSession) {
+    override fun addSession(session: Session) {
         try {
-            super.addSession(httpSession)
+            super.addSession(session)
             commit()
         } catch (e: Exception) {
             rollback()
@@ -25,9 +24,9 @@ class SimpleHttpSessionContextManagerProxy : SimpleHttpSessionContextManager() {
     }
 
     @Synchronized
-    override fun removeSession(httpSession: HttpSession) {
+    override fun removeSession(session: Session) {
         try {
-            super.removeSession(httpSession)
+            super.removeSession(session)
             commit()
         } catch (e: Exception) {
             rollback()
@@ -35,9 +34,9 @@ class SimpleHttpSessionContextManagerProxy : SimpleHttpSessionContextManager() {
         }
     }
 
-    override fun removeSessionByUserMailAddress(mailAddress: String) {
+    override fun removeSessionById(sessionId: String) {
         try {
-            super.removeSessionByUserMailAddress(mailAddress)
+            super.removeSessionById(sessionId)
             commit()
         } catch (e: Exception) {
             rollback()

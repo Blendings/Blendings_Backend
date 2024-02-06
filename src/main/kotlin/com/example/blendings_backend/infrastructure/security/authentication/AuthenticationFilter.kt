@@ -1,6 +1,6 @@
 package com.example.blendings_backend.infrastructure.security.authentication
 
-import com.example.blendings_backend.infrastructure.security.session.manager.HttpSessionContextManager
+import com.example.blendings_backend.infrastructure.security.session.manager.SessionManager
 import com.example.blendings_backend.infrastructure.security.user.CustomUserDetails
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 class AuthenticationFilter(
+    private val sm: SessionManager,
     private val userDetailsService: UserDetailsService
 ) : OncePerRequestFilter() {
 
@@ -20,16 +21,19 @@ class AuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        if (request.getSession(false) != null) {
+        val session = sm.getSession()
 
+        if (session != null) {
             SecurityContextHolder.getContext().authentication = SessionUserDetailsAuthentication(
-                session = request.session,
+                session = session,
                 userDetails = userDetailsService.loadUserByUsername(
-                    request.session.getAttribute(HttpSessionContextManager.MAIL_ADDRESS_ATTRIBUTE_KEY).toString()
+                    session.getUserMailAddress()
                 ) as CustomUserDetails
             )
         }
 
         filterChain.doFilter(request, response)
+
+        SecurityContextHolder.clearContext()
     }
 }

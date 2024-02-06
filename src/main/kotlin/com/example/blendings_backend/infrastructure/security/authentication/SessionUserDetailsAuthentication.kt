@@ -1,12 +1,12 @@
 package com.example.blendings_backend.infrastructure.security.authentication
 
+import com.example.blendings_backend.infrastructure.security.session.Session
 import com.example.blendings_backend.infrastructure.security.user.CustomUserDetails
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
-import javax.servlet.http.HttpSession
 
 class SessionUserDetailsAuthentication(
-    val session: HttpSession,
+    val session: Session,
     val userDetails: CustomUserDetails
 ) : Authentication {
 
