@@ -31,7 +31,7 @@ class CreateClaimInteractor(
         val couple = findCoupleMapByNicknamePort.findCoupleMapByNickname(coupleNickname)
             ?: throw CoupleNotFoundException
 
-        if (couple.femaleUser.mailAddress != user.mailAddress && couple.maleUser.mailAddress != user.mailAddress)
+        if (couple.femaleUser.id != user.id && couple.maleUser.id != user.id)
             throw CannotAccessCoupleException
 
         val claim = saveClaimPort.saveClaim(
@@ -40,9 +40,9 @@ class CreateClaimInteractor(
                     usedAt = usedAt,
                     cost = cost,
                     date = localDate,
-                    userNickname = user.nickname,
+                    user = user,
                     couple = couple,
-                    isApproved = false,
+                    isApproved = false
                 )
             }
         )
