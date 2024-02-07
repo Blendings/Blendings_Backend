@@ -1,5 +1,6 @@
 package com.example.blendings_backend.usecase.domain.claim
 
+import com.example.blendings_backend.usecase.domain.auth.exception.MetDayAfterThanCurrentDayException
 import com.example.blendings_backend.usecase.domain.claim.dto.request.UpdateClaimRequest
 import com.example.blendings_backend.usecase.domain.claim.exception.CannotAccessClaimException
 import com.example.blendings_backend.usecase.domain.claim.exception.ClaimNotFoundException
@@ -14,6 +15,7 @@ import com.example.blendings_backend.usecase.domain.user.port.out.persistence.Fi
 import com.example.blendings_backend.usecase.global.annotation.Interactor
 import com.example.blendings_backend.usecase.global.convertor.LocalDateConvertor
 import com.example.blendings_backend.usecase.global.dto.response.LocationKeyResponse
+import java.time.LocalDate
 
 @Interactor
 class UpdateClaimInteractor(
@@ -23,8 +25,16 @@ class UpdateClaimInteractor(
     private val getCurrentUserPort: GetCurrentUserPort
 ) : UpdateClaimUseCase {
 
-    override fun updateClaim(updateClaimRequest: UpdateClaimRequest, coupleNickname: String, id: Long): LocationKeyResponse {
+    override fun updateClaim(
+        updateClaimRequest: UpdateClaimRequest,
+        coupleNickname: String,
+        id: Long
+    ): LocationKeyResponse {
         val user = getCurrentUserPort.execute()
+
+        val localDate = LocalDateConvertor.convertStringToLocalDate(updateClaimRequest.date)
+        if (localDate.isAfter(LocalDate.now()))
+            throw MetDayAfterThanCurrentDayException
 
         val couple = findCoupleMapByNicknamePort.findCoupleMapByNickname(coupleNickname)
             ?: throw CoupleNotFoundException
@@ -42,7 +52,7 @@ class UpdateClaimInteractor(
                 ClaimJpaEntity(
                     usedAt = usedAt,
                     cost = cost,
-                    date = LocalDateConvertor.convertStringToLocalDate(updateClaimRequest.date),
+                    date = localDate,
                     user = claim.user,
                     couple = claim.couple,
                     isApproved = false

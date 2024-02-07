@@ -21,6 +21,7 @@ class AuthController(
     private val issueSessionPort: IssueSessionPort
 ) {
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign/mail")
     fun mailSend(
         @Valid
@@ -31,6 +32,7 @@ class AuthController(
         sendAuthenticationMailUseCase.sendAuthenticationMailsToCouple(request!!.toDomainRequest())
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign/mail/resend")
     fun mailResend(
         @Valid
@@ -41,6 +43,8 @@ class AuthController(
         resendMailUseCase.resendMail(request!!.toDomainRequest())
     }
 
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/sign/mail/authenticate")
     fun mailAuthenticate(
         @Valid
@@ -62,6 +66,7 @@ class AuthController(
         signUseCase.sign(request!!.toDomainRequest())
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @GetMapping("/login")
     fun login(
         @Valid

@@ -1,14 +1,11 @@
 package com.example.blendings_backend.presentation.global
 
+import org.springframework.http.HttpStatus
 import javax.servlet.http.HttpServletResponse
 
 object ResponseEditor {
 
     const val HEADER_LOCATION_NAME = "Location"
-
-    fun HttpServletResponse.setStatusCreated(): HttpServletResponse = apply {
-        status = 201
-    }
 
     fun HttpServletResponse.setLocationHeader(
         postRequestURL: String,

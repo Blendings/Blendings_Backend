@@ -3,11 +3,11 @@ package com.example.blendings_backend.presentation.domain.claim
 import com.example.blendings_backend.presentation.domain.claim.dto.request.CreateClaimWebRequest
 import com.example.blendings_backend.presentation.domain.claim.dto.request.UpdateClaimWebRequest
 import com.example.blendings_backend.presentation.global.ResponseEditor.setLocationHeader
-import com.example.blendings_backend.presentation.global.ResponseEditor.setStatusCreated
 import com.example.blendings_backend.presentation.global.ValidationValue
 import com.example.blendings_backend.usecase.domain.claim.port.`in`.CreateClaimUseCase
 import com.example.blendings_backend.usecase.domain.claim.port.`in`.UpdateClaimUseCase
 import com.example.blendings_backend.usecase.global.annotation.WebAdapter
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -23,6 +23,7 @@ class ClaimController(
     private val updateClaimUseCase: UpdateClaimUseCase
 ) {
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{coupleNickname}")
     fun claimCreate(
         @Valid
@@ -37,9 +38,10 @@ class ClaimController(
     ) {
         val response = createClaimUseCase.createClaim(coupleNickname, createClaimWebRequest.toDomainRequest())
 
-        httpServletResponse.setStatusCreated().setLocationHeader(httpServletRequest.requestURL.toString(), response.key)
+        httpServletResponse.setLocationHeader(httpServletRequest.requestURL.toString(), response.key)
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{coupleNickname}/{id}")
     fun claimUpdate(
         @Valid
@@ -57,6 +59,6 @@ class ClaimController(
     ) {
         val response = updateClaimUseCase.updateClaim(updateClaimWebRequest.toDomainRequest(), coupleNickname, id)
 
-        httpServletResponse.setStatusCreated().setLocationHeader(httpServletRequest.requestURL.toString(), response.key)
+        httpServletResponse.setLocationHeader(httpServletRequest.requestURL.toString(), response.key)
     }
 }
