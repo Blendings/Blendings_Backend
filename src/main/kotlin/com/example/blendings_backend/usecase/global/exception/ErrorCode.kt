@@ -15,6 +15,11 @@ enum class ErrorCode(
     PASSWORD_MISMATCH(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
     INVALID_SESSION_ID(HttpStatus.UNAUTHORIZED, "Session Id가 유효하지 않습니다."),
 
+    // Date
+    MET_DAY_AFTER_THAN_CURRENT_DAY(HttpStatus.BAD_REQUEST, "만난 날은 미래일 수 없습니다."),
+    MET_DAY_BEFORE_THAN_BIRTHDAY(HttpStatus.BAD_REQUEST, "만난 날은 생일보다 과거일 수 없습니다."),
+    INVALID_DAY(HttpStatus.BAD_REQUEST, "무효한 날짜입니다."),
+
     // User
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
 
@@ -31,8 +36,7 @@ enum class ErrorCode(
     DUPLICATED_MAIL_ADDRESS(HttpStatus.CONFLICT, "중복된 메일입니다."),
     COUPLE_MAIL_ADDRESSES_CANNOT_SAME(HttpStatus.BAD_REQUEST, "메일은 같을 수 없습니다."),
 
-    // Date
-    MET_DAY_AFTER_THAN_CURRENT_DAY(HttpStatus.BAD_REQUEST, "만난 날은 미래일 수 없습니다."),
-    MET_DAY_BEFORE_THAN_BIRTHDAY(HttpStatus.BAD_REQUEST, "만난 날은 생일보다 과거일 수 없습니다."),
-    INVALID_DAY(HttpStatus.BAD_REQUEST, "무효한 날짜입니다.")
+    // Claim
+    CLAIM_NOT_FOUND(HttpStatus.NOT_FOUND, "청구서를 찾을 수 없습니다."),
+    CANNOT_ACCESS_CLAIM(HttpStatus.FORBIDDEN, "해당 청구서에 접근할 수 없습니다."),
 }
