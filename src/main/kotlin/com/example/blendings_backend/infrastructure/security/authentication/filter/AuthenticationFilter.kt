@@ -1,5 +1,6 @@
-package com.example.blendings_backend.infrastructure.security.authentication
+package com.example.blendings_backend.infrastructure.security.authentication.filter
 
+import com.example.blendings_backend.infrastructure.security.authentication.SessionUserDetailsAuthentication
 import com.example.blendings_backend.infrastructure.security.session.manager.SessionManager
 import com.example.blendings_backend.infrastructure.security.user.CustomUserDetails
 import org.springframework.security.core.context.SecurityContextHolder

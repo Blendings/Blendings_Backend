@@ -7,8 +7,8 @@ enum class ErrorCode(
     val message: String
 ) {
 
-    // Persistence
-    NOT_DETACHED_ENTITY(HttpStatus.INTERNAL_SERVER_ERROR, "준영속 상태의 Entity가 아닙니다."),
+    // InfraStructure
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
 
     // Auth
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "유효한 자격 증명이 필요합니다."),
