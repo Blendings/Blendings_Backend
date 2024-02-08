@@ -1,8 +1,8 @@
 package com.example.blendings_backend.usecase.domain.auth
 
 import com.example.blendings_backend.usecase.domain.user.exception.UserNotFoundException
-import com.example.blendings_backend.usecase.domain.auth.dto.LoggedUserInfoResponse
-import com.example.blendings_backend.usecase.domain.auth.dto.LoginRequest
+import com.example.blendings_backend.usecase.domain.auth.dto.response.LoggedUserInfoResponse
+import com.example.blendings_backend.usecase.domain.auth.dto.request.LoginRequest
 import com.example.blendings_backend.usecase.domain.auth.exception.PasswordMismatchException
 import com.example.blendings_backend.usecase.domain.auth.port.`in`.LoginUseCase
 import com.example.blendings_backend.usecase.domain.auth.port.out.persistence.FindCoupleMapByUserPort

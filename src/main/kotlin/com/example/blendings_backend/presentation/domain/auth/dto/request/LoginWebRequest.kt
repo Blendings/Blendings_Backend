@@ -2,7 +2,7 @@ package com.example.blendings_backend.presentation.domain.auth.dto.request
 
 import com.example.blendings_backend.presentation.domain.auth.AuthValidationValue
 import com.example.blendings_backend.presentation.global.WebRequest
-import com.example.blendings_backend.usecase.domain.auth.dto.LoginRequest
+import com.example.blendings_backend.usecase.domain.auth.dto.request.LoginRequest
 import javax.validation.constraints.Pattern
 
 data class LoginWebRequest(

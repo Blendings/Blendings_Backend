@@ -1,8 +1,8 @@
 package com.example.blendings_backend.usecase.domain.auth
 
 import com.example.blendings_backend.usecase.domain.auth.exception.*
-import com.example.blendings_backend.usecase.domain.auth.dto.SignInfoDto
-import com.example.blendings_backend.usecase.domain.auth.dto.SignRequest
+import com.example.blendings_backend.usecase.domain.auth.dto.request.SignInfoDto
+import com.example.blendings_backend.usecase.domain.auth.dto.request.SignRequest
 import com.example.blendings_backend.usecase.domain.auth.port.`in`.SignUseCase
 import com.example.blendings_backend.usecase.domain.auth.port.out.persistence.DeleteAuthenticatedMailPort
 import com.example.blendings_backend.usecase.domain.auth.port.out.persistence.ExistsAuthenticatedMailPort

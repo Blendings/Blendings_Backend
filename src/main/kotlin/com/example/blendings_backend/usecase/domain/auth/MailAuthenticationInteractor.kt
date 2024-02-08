@@ -1,8 +1,8 @@
 package com.example.blendings_backend.usecase.domain.auth
 
-import com.example.blendings_backend.usecase.domain.auth.dto.AuthenticateMailRequest
-import com.example.blendings_backend.usecase.domain.auth.dto.ResendMailRequest
-import com.example.blendings_backend.usecase.domain.auth.dto.SendMailRequest
+import com.example.blendings_backend.usecase.domain.auth.dto.request.AuthenticateMailRequest
+import com.example.blendings_backend.usecase.domain.auth.dto.request.ResendMailRequest
+import com.example.blendings_backend.usecase.domain.auth.dto.request.SendMailRequest
 import com.example.blendings_backend.usecase.domain.auth.exception.AuthenticationMailUnsentException
 import com.example.blendings_backend.usecase.domain.auth.exception.InAuthenticateMailAddressException
 import com.example.blendings_backend.usecase.domain.auth.exception.MisMatchAuthenticationCodeException
