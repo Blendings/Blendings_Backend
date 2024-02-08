@@ -26,13 +26,19 @@ class ExceptionFilter(
         try {
             filterChain.doFilter(request, response)
         } catch (e: NestedServletException) {
-            if (e.cause is GlobalException) {
-                response.writeErrorCode(
-                    (e.cause as GlobalException).errorCode
-                )
-            } else {
-                response.writeErrorCode(ErrorCode.INTERNAL_SERVER_ERROR)
+            when (e.cause) {
+                is GlobalException -> {
+                    response.writeErrorCode(
+                        (e.cause as GlobalException).errorCode
+                    )
+                }
+
+                else -> {
+                    response.writeErrorCode(ErrorCode.INTERNAL_SERVER_ERROR)
+                }
             }
+        } catch (e: GlobalException) {
+            response.writeErrorCode(e.errorCode)
         }
     }
 
