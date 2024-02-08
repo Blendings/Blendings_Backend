@@ -9,15 +9,15 @@ interface SessionManager {
         const val SESSION_EXPIRE_TIME = 1800
     }
 
+    fun getCurrentSession(): Session?
+
+    fun setCurrentSession(session: Session?)
+
     fun addSession(session: Session)
 
     fun removeSession(session: Session)
 
     fun removeSessionById(sessionId: String)
-
-    fun getSession(): Session?
-
-    fun setSession(session: Session?)
 
     fun getSessionCount(): Int
 

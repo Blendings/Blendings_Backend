@@ -2,6 +2,8 @@ package com.example.blendings_backend.infrastructure.security.session.manager
 
 import com.example.blendings_backend.infrastructure.security.session.Session
 import org.springframework.stereotype.Component
+import java.time.Duration
+import java.time.LocalDateTime
 
 @Component
 class SimpleSessionManager : SessionManager {
@@ -12,14 +14,19 @@ class SimpleSessionManager : SessionManager {
         var sessionContext: MutableMap<String, Session> = mutableMapOf()
     }
 
-    override fun getSession(): Session? =
+    override fun getCurrentSession(): Session? =
         threadSession.get()
 
-    override fun setSession(session: Session?) {
+    override fun setCurrentSession(session: Session?) {
         threadSession.set(session)
     }
 
     override fun addSession(session: Session) {
+        sessionContext.forEach {
+            if (it.value.getUserMailAddress() == session.getUserMailAddress()
+                || createdAtExpired(it.value.getCreatedAt())
+            ) removeSession(it.value)
+        }
         sessionContext[session.getSessionId()] = session
     }
 
@@ -38,5 +45,13 @@ class SimpleSessionManager : SessionManager {
         sessionContext.toMutableMap()
 
     override fun getSessionById(sessionId: String): Session? =
-        sessionContext[sessionId]
+        sessionContext[sessionId]?.run {
+            if (createdAtExpired(getCreatedAt())) {
+                removeSession(this)
+                null
+            } else this
+        }
+
+    private fun createdAtExpired(createdAt: LocalDateTime): Boolean =
+        Duration.between(createdAt, LocalDateTime.now()).seconds > SessionManager.SESSION_EXPIRE_TIME
 }

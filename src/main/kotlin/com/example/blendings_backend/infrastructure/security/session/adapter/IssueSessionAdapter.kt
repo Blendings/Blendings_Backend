@@ -13,6 +13,6 @@ class IssueSessionAdapter(
     override fun execute(userMailAddress: String, coupleNickname: String) {
         val session = SimpleSession(userMailAddress, coupleNickname, sm)
         sm.addSession(session)
-        sm.setSession(session)
+        sm.setCurrentSession(session)
     }
 }

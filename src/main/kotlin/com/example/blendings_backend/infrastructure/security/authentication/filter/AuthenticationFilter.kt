@@ -22,7 +22,7 @@ class AuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val session = sm.getSession()
+        val session = sm.getCurrentSession()
 
         if (session != null) {
             SecurityContextHolder.getContext().authentication = SessionUserDetailsAuthentication(

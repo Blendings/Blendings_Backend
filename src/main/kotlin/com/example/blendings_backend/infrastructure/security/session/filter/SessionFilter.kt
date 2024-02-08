@@ -31,12 +31,12 @@ class SessionFilter(
                 throw InvalidSessionIdException
             }
 
-            sm.setSession(session)
+            sm.setCurrentSession(session)
         }
 
         filterChain.doFilter(request, response)
 
-        sm.getSession()?.run {
+        sm.getCurrentSession()?.run {
             response.addCookie(
                 Cookie(SessionManager.SESSION_ID_COOKIE_NAME, getSessionId()).apply {
                     path = "/"
@@ -44,7 +44,7 @@ class SessionFilter(
             )
         }
 
-        sm.setSession(null)
+        sm.setCurrentSession(null)
     }
 
     private fun HttpServletRequest.getSessionIdCookie(): Cookie? {
