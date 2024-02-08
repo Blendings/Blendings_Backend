@@ -28,11 +28,7 @@ class CreateClaimInteractor(
         if (localDate.isAfter(LocalDate.now()))
             throw MetDayAfterThanCurrentDayException
 
-        val couple = findCoupleMapByNicknamePort.findCoupleMapByNickname(coupleNickname)
-            ?: throw CoupleNotFoundException
-
-        if (couple.femaleUser.id != user.id && couple.maleUser.id != user.id)
-            throw CannotAccessCoupleException
+        val couple = findCoupleMapByNicknamePort.findCoupleMapByNickname(coupleNickname)!!
 
         val claim = saveClaimPort.saveClaim(
             createClaimRequest.run {
