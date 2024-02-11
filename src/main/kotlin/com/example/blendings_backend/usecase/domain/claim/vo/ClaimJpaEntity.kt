@@ -1,6 +1,5 @@
 package com.example.blendings_backend.usecase.domain.claim.vo
 
-import com.example.blendings_backend.usecase.domain.user.vo.CoupleMapJpaEntity
 import com.example.blendings_backend.usecase.domain.user.vo.UserJpaEntity
 import com.example.blendings_backend.usecase.global.consts.TableName
 import com.example.blendings_backend.usecase.global.entty.BaseLongIdEntity
@@ -13,7 +12,7 @@ class ClaimJpaEntity(
     cost: Long,
     date: LocalDate,
     user: UserJpaEntity,
-    couple: CoupleMapJpaEntity,
+    coupleNickname: String,
     isApproved: Boolean,
     id: Long? = null
 ) : BaseLongIdEntity(id) {
@@ -31,9 +30,8 @@ class ClaimJpaEntity(
     @JoinColumn(name = "user_id", updatable = true, nullable = false)
     val user: UserJpaEntity = user
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "couple_nickname", updatable = false, nullable = false)
-    val couple: CoupleMapJpaEntity = couple
+    @Column(name = "couple_nickname", updatable = false, nullable = false)
+    val coupleNickname: String = coupleNickname
 
     @Column(name = "is_approved", updatable = true, nullable = false)
     val isApproved: Boolean = isApproved

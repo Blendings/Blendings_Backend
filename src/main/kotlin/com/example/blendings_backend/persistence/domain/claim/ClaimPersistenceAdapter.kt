@@ -21,8 +21,8 @@ class ClaimPersistenceAdapter(
     override fun findById(id: Long): ClaimJpaEntity? =
         claimRepository.findById(id)
 
-    override fun findPageable(pageRequest: PageRequest): List<ClaimJpaEntity> =
-        claimRepository.findAll(pageRequest)
+    override fun findByCoupleNicknamePageable(coupleNickname: String, pageRequest: PageRequest): List<ClaimJpaEntity> =
+        claimRepository.findAllByCoupleNickname(coupleNickname, pageRequest)
 
     override fun delete(claimJpaEntity: ClaimJpaEntity) {
         claimRepository.delete(claimJpaEntity)

@@ -29,7 +29,7 @@ class CoupleMapJpaEntity(
     @Column(name = "met_date", updatable = false, nullable = false)
     val metDate: LocalDate = metDate
 
-    @OneToMany(mappedBy = "couple", fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
     val claims: MutableList<ClaimJpaEntity> = mutableListOf()
         get() = field.toMutableList()
 }

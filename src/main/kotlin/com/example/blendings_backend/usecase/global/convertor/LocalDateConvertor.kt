@@ -15,6 +15,9 @@ object LocalDateConvertor {
             throw InvalidDayException
         }
     }
+
+    fun convertLocalDateToString(localDate: LocalDate): String =
+        localDate.year.toString() + "." + localDate.monthValue.toString() + "." + localDate.dayOfMonth.toString()
 }
 
 private object InvalidDayException : GlobalException(ErrorCode.INVALID_DAY)

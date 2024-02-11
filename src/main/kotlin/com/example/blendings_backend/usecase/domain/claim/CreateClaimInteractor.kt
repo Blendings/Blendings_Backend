@@ -5,8 +5,6 @@ import com.example.blendings_backend.usecase.domain.claim.dto.request.CreateClai
 import com.example.blendings_backend.usecase.domain.claim.port.`in`.CreateClaimUseCase
 import com.example.blendings_backend.usecase.domain.claim.port.out.persistence.SaveClaimPort
 import com.example.blendings_backend.usecase.domain.claim.vo.ClaimJpaEntity
-import com.example.blendings_backend.usecase.domain.user.exception.CannotAccessCoupleException
-import com.example.blendings_backend.usecase.domain.user.exception.CoupleNotFoundException
 import com.example.blendings_backend.usecase.domain.user.port.out.GetCurrentUserPort
 import com.example.blendings_backend.usecase.domain.user.port.out.persistence.FindCoupleMapByNicknamePort
 import com.example.blendings_backend.usecase.global.annotation.Interactor
@@ -37,7 +35,7 @@ class CreateClaimInteractor(
                     cost = cost,
                     date = localDate,
                     user = user,
-                    couple = couple,
+                    coupleNickname = couple.id!!,
                     isApproved = false
                 )
             }

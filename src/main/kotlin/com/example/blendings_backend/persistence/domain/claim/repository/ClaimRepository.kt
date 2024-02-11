@@ -10,7 +10,7 @@ interface ClaimRepository : Repository<ClaimJpaEntity, Long?> {
 
     fun findById(id: Long): ClaimJpaEntity?
 
-    fun findAll(pageable: Pageable): List<ClaimJpaEntity>
+    fun findAllByCoupleNickname(coupleNickname: String, pageable: Pageable): List<ClaimJpaEntity>
 
     fun delete(claimJpaEntity: ClaimJpaEntity)
 }

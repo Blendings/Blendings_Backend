@@ -4,9 +4,8 @@ import com.example.blendings_backend.presentation.domain.claim.dto.request.Creat
 import com.example.blendings_backend.presentation.domain.claim.dto.request.UpdateClaimWebRequest
 import com.example.blendings_backend.presentation.global.ResponseEditor.setLocationHeader
 import com.example.blendings_backend.presentation.global.ValidationValue
-import com.example.blendings_backend.usecase.domain.claim.port.`in`.CreateClaimUseCase
-import com.example.blendings_backend.usecase.domain.claim.port.`in`.DeleteClaimUseCase
-import com.example.blendings_backend.usecase.domain.claim.port.`in`.UpdateClaimUseCase
+import com.example.blendings_backend.usecase.domain.claim.dto.response.ClaimListResponse
+import com.example.blendings_backend.usecase.domain.claim.port.`in`.*
 import com.example.blendings_backend.usecase.global.annotation.WebAdapter
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -20,9 +19,11 @@ import javax.validation.constraints.Positive
 @RequestMapping("/claims")
 @WebAdapter
 class ClaimController(
+    private val findClaimUseCase: FindClaimUseCase,
     private val createClaimUseCase: CreateClaimUseCase,
     private val updateClaimUseCase: UpdateClaimUseCase,
-    private val deleteClaimUseCase: DeleteClaimUseCase
+    private val deleteClaimUseCase: DeleteClaimUseCase,
+    private val approveClaimUseCase: ApproveClaimUseCase
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -76,4 +77,28 @@ class ClaimController(
     ) {
         deleteClaimUseCase.deleteClaim(coupleNickname, id)
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PostMapping("/{coupleNickname}/{id}")
+    fun claimApprove(
+        @NotBlank(message = ValidationValue.NOT_BLANK_MESSAGE)
+        @PathVariable
+        coupleNickname: String,
+        @Positive(message = ValidationValue.POSITIVE_MESSAGE)
+        @PathVariable
+        id: Long
+    ) {
+        approveClaimUseCase.approveClaim(coupleNickname, id)
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{coupleNickname}")
+    fun claimList(
+        @NotBlank(message = ValidationValue.NOT_BLANK_MESSAGE)
+        @PathVariable
+        coupleNickname: String,
+        @RequestParam
+        index: Int
+    ): ClaimListResponse =
+        findClaimUseCase.findClaimList(coupleNickname, index)
 }

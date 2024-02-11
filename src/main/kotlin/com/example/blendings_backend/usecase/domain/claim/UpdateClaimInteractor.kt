@@ -44,7 +44,7 @@ class UpdateClaimInteractor(
                     cost = cost,
                     date = localDate,
                     user = claim.user,
-                    couple = claim.couple,
+                    coupleNickname = claim.coupleNickname,
                     isApproved = false
                 )
             }

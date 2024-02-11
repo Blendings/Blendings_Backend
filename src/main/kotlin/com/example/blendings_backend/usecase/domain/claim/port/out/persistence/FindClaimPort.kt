@@ -5,5 +5,5 @@ import org.springframework.data.domain.PageRequest
 
 interface FindClaimPort {
     fun findById(id: Long): ClaimJpaEntity?
-    fun findPageable(pageRequest: PageRequest): List<ClaimJpaEntity>
+    fun findByCoupleNicknamePageable(coupleNickname: String, pageRequest: PageRequest): List<ClaimJpaEntity>
 }
