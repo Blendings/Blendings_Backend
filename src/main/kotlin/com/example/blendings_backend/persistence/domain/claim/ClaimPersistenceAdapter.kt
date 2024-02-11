@@ -1,6 +1,7 @@
 package com.example.blendings_backend.persistence.domain.claim
 
 import com.example.blendings_backend.persistence.domain.claim.repository.ClaimRepository
+import com.example.blendings_backend.usecase.domain.claim.port.out.persistence.DeleteClaimPort
 import com.example.blendings_backend.usecase.domain.claim.port.out.persistence.FindClaimPort
 import com.example.blendings_backend.usecase.domain.claim.port.out.persistence.SaveClaimPort
 import com.example.blendings_backend.usecase.domain.claim.vo.ClaimJpaEntity
@@ -11,7 +12,8 @@ import org.springframework.data.domain.PageRequest
 class ClaimPersistenceAdapter(
     private val claimRepository: ClaimRepository
 ) : SaveClaimPort,
-    FindClaimPort {
+    FindClaimPort,
+    DeleteClaimPort {
 
     override fun saveClaim(claimJpaEntity: ClaimJpaEntity): ClaimJpaEntity =
         claimRepository.save(claimJpaEntity)
@@ -21,4 +23,8 @@ class ClaimPersistenceAdapter(
 
     override fun findPageable(pageRequest: PageRequest): List<ClaimJpaEntity> =
         claimRepository.findAll(pageRequest)
+
+    override fun delete(claimJpaEntity: ClaimJpaEntity) {
+        claimRepository.delete(claimJpaEntity)
+    }
 }

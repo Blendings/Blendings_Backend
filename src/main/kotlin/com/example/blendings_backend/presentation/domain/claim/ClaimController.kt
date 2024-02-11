@@ -5,6 +5,7 @@ import com.example.blendings_backend.presentation.domain.claim.dto.request.Updat
 import com.example.blendings_backend.presentation.global.ResponseEditor.setLocationHeader
 import com.example.blendings_backend.presentation.global.ValidationValue
 import com.example.blendings_backend.usecase.domain.claim.port.`in`.CreateClaimUseCase
+import com.example.blendings_backend.usecase.domain.claim.port.`in`.DeleteClaimUseCase
 import com.example.blendings_backend.usecase.domain.claim.port.`in`.UpdateClaimUseCase
 import com.example.blendings_backend.usecase.global.annotation.WebAdapter
 import org.springframework.http.HttpStatus
@@ -20,7 +21,8 @@ import javax.validation.constraints.Positive
 @WebAdapter
 class ClaimController(
     private val createClaimUseCase: CreateClaimUseCase,
-    private val updateClaimUseCase: UpdateClaimUseCase
+    private val updateClaimUseCase: UpdateClaimUseCase,
+    private val deleteClaimUseCase: DeleteClaimUseCase
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,5 +62,18 @@ class ClaimController(
         val response = updateClaimUseCase.updateClaim(updateClaimWebRequest.toDomainRequest(), coupleNickname, id)
 
         httpServletResponse.setLocationHeader(httpServletRequest.requestURL.toString(), response.key)
+    }
+
+    @ResponseStatus(HttpStatus.RESET_CONTENT)
+    @DeleteMapping("/{coupleNickname}/{id}")
+    fun claimDelete(
+        @NotBlank(message = ValidationValue.NOT_BLANK_MESSAGE)
+        @PathVariable
+        coupleNickname: String,
+        @Positive(message = ValidationValue.POSITIVE_MESSAGE)
+        @PathVariable
+        id: Long
+    ) {
+        deleteClaimUseCase.deleteClaim(coupleNickname, id)
     }
 }
