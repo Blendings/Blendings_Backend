@@ -1,5 +1,6 @@
 package com.example.blendings_backend.infrastructure.security.config
 
+import com.example.blendings_backend.infrastructure.security.authentication.entrypoint.CustomAuthenticationEntryPoint
 import com.example.blendings_backend.infrastructure.security.handler.CustomAccessDeniedHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -12,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableWebSecurity
 class SecurityConfig(
     private val accessDeniedHandler: CustomAccessDeniedHandler,
+    private val authenticationEntryPoint: CustomAuthenticationEntryPoint,
     private val securityFilterChainConfig: SecurityFilterChainConfig,
 ) {
 
@@ -33,6 +35,7 @@ class SecurityConfig(
 
             .exceptionHandling()
             .accessDeniedHandler(accessDeniedHandler)
+            .authenticationEntryPoint(authenticationEntryPoint)
             .and()
 
             .apply(securityFilterChainConfig)
