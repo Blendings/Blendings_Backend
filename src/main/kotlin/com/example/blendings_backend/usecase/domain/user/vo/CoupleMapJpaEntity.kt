@@ -1,6 +1,7 @@
 package com.example.blendings_backend.usecase.domain.user.vo
 
 import com.example.blendings_backend.usecase.domain.claim.vo.ClaimJpaEntity
+import com.example.blendings_backend.usecase.domain.diary.vo.DiaryJpaEntity
 import com.example.blendings_backend.usecase.global.consts.TableName
 import com.example.blendings_backend.usecase.global.entty.BaseEntity
 import java.time.LocalDate
@@ -31,5 +32,9 @@ class CoupleMapJpaEntity(
 
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
     val claims: MutableList<ClaimJpaEntity> = mutableListOf()
+        get() = field.toMutableList()
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
+    val diaries: MutableList<DiaryJpaEntity> = mutableListOf()
         get() = field.toMutableList()
 }

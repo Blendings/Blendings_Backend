@@ -35,6 +35,7 @@ class ExceptionFilter(
 
                 else -> {
                     response.writeErrorCode(ErrorCode.INTERNAL_SERVER_ERROR)
+                    e.printStackTrace()
                 }
             }
         } catch (e: GlobalException) {

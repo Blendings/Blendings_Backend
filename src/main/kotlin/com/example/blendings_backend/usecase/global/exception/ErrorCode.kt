@@ -39,4 +39,9 @@ enum class ErrorCode(
     // Claim
     CLAIM_NOT_FOUND(HttpStatus.NOT_FOUND, "청구서를 찾을 수 없습니다."),
     CANNOT_ACCESS_CLAIM(HttpStatus.FORBIDDEN, "해당 청구서에 접근할 수 없습니다."),
+
+    // Diary
+    DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "일기를 찾을 수 없습니다"),
+    CANNOT_WRITE_MANY_DIARY_IN_DAY(HttpStatus.CONFLICT, "하루 안에 여러 개의 일기를 적을 수 없습니다."),
+    CANNOT_ACCESS_DIARY(HttpStatus.FORBIDDEN, "일기에 접근할 수 없습니다.")
 }
