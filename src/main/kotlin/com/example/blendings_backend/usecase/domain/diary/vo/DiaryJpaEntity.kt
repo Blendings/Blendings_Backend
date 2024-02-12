@@ -8,19 +8,19 @@ import javax.persistence.*
 
 @Entity(name = TableName.DIARY_TABLE_NAME)
 class DiaryJpaEntity(
-    content: String,
     emotion: String,
+    content: String,
     date: LocalDate,
     user: UserJpaEntity,
     coupleNickname: String,
     id: Long? = null
 ) : BaseLongIdEntity(id) {
 
-    @Column(name = "content", updatable = true, nullable = false)
-    val content: String = content
-
     @Column(name = "emotion", updatable = true, nullable = false)
     val emotion: String = emotion
+
+    @Column(name = "content", updatable = true, nullable = false)
+    val content: String = content
 
     @Column(name = "date", updatable = false, nullable = false)
     val date: LocalDate = date
