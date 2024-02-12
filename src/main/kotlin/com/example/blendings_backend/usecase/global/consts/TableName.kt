@@ -9,4 +9,6 @@ object TableName {
     const val COUPLE_MAP_TABLE_NAME = MAP_TABLE_NAME_PREFIX + "couple"
 
     const val CLAIM_TABLE_NAME = TABLE_NAME_PREFIX + "claim"
+
+    const val DIARY_TABLE_NAME = TABLE_NAME_PREFIX + "diary"
 }
