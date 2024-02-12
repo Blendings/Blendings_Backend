@@ -25,6 +25,7 @@ class GetDiaryDetailInteractor(
 
         diary.run {
             return DiaryDetailResponse(
+                id = id,
                 emotion = emotion,
                 content = content,
                 userNickname = user.nickname,

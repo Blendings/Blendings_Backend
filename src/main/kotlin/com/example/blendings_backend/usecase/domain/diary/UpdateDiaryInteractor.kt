@@ -40,7 +40,8 @@ class UpdateDiaryInteractor(
                     content = content,
                     date = diary.date,
                     user = diary.user,
-                    coupleNickname = diary.coupleNickname
+                    coupleNickname = diary.coupleNickname,
+                    id = diary.id
                 )
             )
         }

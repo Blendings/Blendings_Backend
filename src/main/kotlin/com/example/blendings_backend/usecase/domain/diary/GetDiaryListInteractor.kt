@@ -14,8 +14,9 @@ class GetDiaryListInteractor(
 ) : GetDiaryListUseCase {
 
     override fun getDiaryList(coupleNickname: String, index: Int): DiaryListResponse = DiaryListResponse(
-        findDiaryPort.findAllByCoupleNicknamePageable(coupleNickname, PageRequest.of(5, index)).map {
+        findDiaryPort.findAllByCoupleNicknamePageable(coupleNickname, PageRequest.of(index, 5)).map {
             DiarySemiDetailResponse(
+                id = it.id!!,
                 emotion = it.emotion,
                 userNickname = it.user.nickname,
                 date = LocalDateConvertor.convertLocalDateToString(it.date)
